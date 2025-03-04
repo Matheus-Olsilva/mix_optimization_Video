@@ -11,7 +11,8 @@ class ProductionMix(Scene):
         self.funcao_objetivo()
         self.restricoes_recursos()
         self.restricoes_demanda()
-        self.modelo_completo()
+        self.modelagem_parametros()
+        self.modelagem_modelo()
         self.conclusao()
 
     def conceitos_mix_producao(self):
@@ -47,11 +48,11 @@ class ProductionMix(Scene):
         
         texto = Tex(
             r"A empresa Naturelat do setor de laticínios fabrica:\\"
-            r"Iogurte, Queijo Minas, Mussarela, Parmesão e Provolone\\"
+            r"Iogurte, Queijo Minas, Mussarela, Parmesão e Provolone.\\"
             r"Em função de mudanças estratégicas e concorrência,\\"
             r"a empresa precisa redefinir seu mix de produção",
-            font_size=30
-        ).next_to(titulo, DOWN, buff=0.5)
+            font_size=35
+        ).next_to(titulo, DOWN, buff=0.5).move_to(ORIGIN)
         
         self.play(Write(titulo))
         self.play(Write(texto))
@@ -194,78 +195,79 @@ class ProductionMix(Scene):
     def restricoes_recursos(self):
         titulo = Text("Restrições de Recursos", color=YELLOW).to_edge(UP)
         restricoes = VGroup(
-            MathTex(r"0,70x_1 + 0,40x_2 + 0,40x_3 + 0,60x_4 + 0,60x_5 \leq 1200", color=BLUE),
-            MathTex(r"0,16x_1 + 0,22x_2 + 0,32x_3 + 0,19x_4 + 0,23x_5 \leq 460", color=GREEN),
-            MathTex(r"0,25x_1 + 0,33x_2 + 0,33x_3 + 0,40x_4 + 0,47x_5 \leq 650", color=ORANGE),
-            MathTex(r"0,05x_1 + 0,12x_2 + 0,09x_3 + 0,04x_4 + 0,16x_5 \leq 170", color=PURPLE)
-        ).arrange(DOWN, buff=0.3).scale(0.6).next_to(titulo, DOWN)
-        
-        legendas = VGroup(
-            Text("Leite (L)", color=BLUE, font_size=24),
-            Text("Soro (L)", color=GREEN, font_size=24),
-            Text("Gordura (kg)", color=ORANGE, font_size=24),
-            Text("Mão de Obra (h)", color=PURPLE, font_size=24)
-        ).arrange(DOWN, buff=0.5).next_to(restricoes, RIGHT, buff=1)
+            MathTex(r"Leite (L): 0,70x_1 + 0,40x_2 + 0,40x_3 + 0,60x_4 + 0,60x_5 \leq 1200", color=WHITE),
+            MathTex(r"Soro (L): 0,16x_1 + 0,22x_2 + 0,32x_3 + 0,19x_4 + 0,23x_5 \leq 460", color=WHITE),
+            MathTex(r"Gordura (kg): 0,25x_1 + 0,33x_2 + 0,33x_3 + 0,40x_4 + 0,47x_5 \leq 650", color=WHITE),
+            MathTex(r"\text{Mão de Obra (h)}: 0,05x_1 + 0,12x_2 + 0,09x_3 + 0,04x_4 + 0,16x_5 \leq 170", color= WHITE)
+        ).arrange(DOWN, buff=0.6).scale(0.6).next_to(titulo, DOWN)
+
+        restricoes.move_to(ORIGIN)
         
         self.play(Write(titulo))
         self.play(LaggedStart(*[Write(r) for r in restricoes], lag_ratio=0.5))
-        self.play(Write(legendas))
         self.wait(3)
-        self.play(FadeOut(VGroup(titulo, restricoes, legendas)))
+        self.play(FadeOut(VGroup(titulo, restricoes)))
 
     def restricoes_demanda(self):
         titulo = Text("Demandas Mínimas", color=YELLOW).to_edge(UP)
         restricoes = VGroup(
-            MathTex(r"x_1 \geq 320", color=WHITE),
-            MathTex(r"x_2 \geq 380", color=WHITE),
-            MathTex(r"x_3 \geq 450", color=WHITE),
-            MathTex(r"x_4 \geq 240", color=WHITE),
-            MathTex(r"x_5 \geq 180", color=WHITE)
-        ).arrange(DOWN, buff=0.4).scale(0.8).next_to(titulo, DOWN)
+            MathTex(r"\text{Iogurte}: x_1 \geq 320", color=WHITE),
+            MathTex(r"\text{Queijo Minas}: x_2 \geq 380", color=WHITE),
+            MathTex(r"\text{Mussarela}: x_3 \geq 450", color=WHITE),
+            MathTex(r"\text{Parmesão}: x_4 \geq 240", color=WHITE),
+            MathTex(r"\text{Provolone}: x_5 \geq 180", color=WHITE)
+        ).arrange(DOWN, buff=0.6).scale(0.8).next_to(titulo, DOWN)
         
-        legenda = VGroup(
-            Text("x₁ = Iogurte", font_size=24),
-            Text("x₂ = Queijo Minas", font_size=24),
-            Text("x₃ = Mussarela", font_size=24),
-            Text("x₄ = Parmesão", font_size=24),
-            Text("x₅ = Provolone", font_size=24)
-        ).arrange(DOWN, buff=0.3, aligned_edge=LEFT).next_to(restricoes, RIGHT, buff=2)
-        
+        restricoes.move_to(ORIGIN)
+
         self.play(Write(titulo))
         self.play(LaggedStart(*[Write(r) for r in restricoes], lag_ratio=0.5))
-        self.play(FadeIn(legenda, shift=LEFT))
         self.wait(2)
-        self.play(FadeOut(VGroup(titulo, restricoes, legenda)))
+        self.play(FadeOut(VGroup(titulo, restricoes)))
 
-    def modelo_completo(self):
-        titulo = Text("Modelo de Programação Linear", color=YELLOW).to_edge(UP)
-        modelo = VGroup(
-            MathTex(r"\text{Max } Z = \sum_{i=1}^5 c_i x_i"),
-            MathTex(r"\text{Sujeito a:}"),
-            MathTex(r"\sum_{i=1}^5 a_{ij} x_i \leq b_j \quad \forall j \in \text{Recursos}"),
-            MathTex(r"x_i \geq d_i \quad \forall i \in \text{Produtos}"),
-            MathTex(r"x_i \geq 0")
-        ).arrange(DOWN, buff=0.4).scale(0.8).next_to(titulo, DOWN)
+    def modelagem_parametros(self):
+        titulo = Text("Modelagem Matemática: Parâmetros", color=YELLOW).to_edge(UP)
         
-        explicacoes = VGroup(
-            Tex(r"$c_i$: Margem de contribuição do produto $i$", font_size=28),
-            Tex(r"$a_{ij}$: Consumo do recurso $j$ por produto $i$", font_size=28),
-            Tex(r"$b_j$: Disponibilidade do recurso $j$", font_size=28),
-            Tex(r"$d_i$: Demanda mínima do produto $i$", font_size=28)
-        ).arrange(DOWN, buff=0.3, aligned_edge=LEFT).next_to(modelo, RIGHT, buff=2)
+        parametros = VGroup(
+            MathTex(r"I: \{1, \ldots, m\} \quad \text{Conjunto de produtos}"),
+            MathTex(r"J: \{1, \ldots, n\} \quad \text{Conjunto de recursos}"),
+            MathTex(r"l_i: \text{Margem por kg do produto } i \in I"),
+            MathTex(r"a_{ij}: \text{Consumo do recurso } j \in J \text{ pelo produto } i \in I"),
+            MathTex(r"b_j: \text{Disponibilidade do recurso } j \in J"),
+            MathTex(r"d_i: \text{Demanda mínima do produto } i \in I")
+        ).arrange(DOWN, buff=0.3, aligned_edge=LEFT).scale(0.7).next_to(titulo, DOWN)
         
         self.play(Write(titulo))
-        self.play(LaggedStart(*[Write(m) for m in modelo], lag_ratio=0.5))
-        self.play(FadeIn(explicacoes, shift=LEFT))
-        self.wait(3)
-        self.play(FadeOut(VGroup(titulo, modelo, explicacoes)))
+        self.play(LaggedStart(*[Write(p) for p in parametros], lag_ratio=0.6))
+        self.wait(4)
+        self.play(FadeOut(VGroup(titulo, parametros)))
+
+    def modelagem_modelo(self):
+        titulo = Text("Modelo de Otimização", color=YELLOW).to_edge(UP)
+        
+        modelo = VGroup(
+            MathTex(r"\text{Variáveis:} \quad x_i = \text{Quantidade diária do produto } i \in I"),
+            MathTex(r"\text{Max } Z = \sum_{i \in I} l_i x_i"),
+            MathTex(r"\text{Sujeito a:}"),
+            MathTex(r"\sum_{i \in I} a_{ij} x_i \leq b_j \quad \forall j \in J"),
+            MathTex(r"x_i \geq d_i \quad \forall i \in I"),
+            MathTex(r"x_i \geq 0 \quad \forall i \in I")
+        ).arrange(DOWN, buff=0.4, aligned_edge=LEFT).scale(0.8).next_to(titulo, DOWN)
+        
+        self.play(Write(titulo))
+        self.play(LaggedStart(*[Write(m) for m in modelo], lag_ratio=0.6))
+        self.wait(5)
+        self.play(FadeOut(VGroup(titulo, modelo)))
 
     def conclusao(self):
-        mensagem = Text("A programação linear permite encontrar\n"
-                       "a combinação ótima de produção\n"
-                       "que maximiza o lucro respeitando\n"
+        mensagem = Text("A programação linear permite encontrar\n\n"
+                       "a combinação ótima de produção\n\n"
+                       "que maximiza o lucro respeitando\n\n"
                        "todas as restrições operacionais!",
-                       font_size=30, color=WHITE)
+                       font_size=30, color=WHITE  
+    ).move_to(ORIGIN)  # Centraliza na tela)
         
         self.play(Write(mensagem))
         self.wait(4)
+
+# Para executar: manim -pql seu_arquivo.py ProductionMix
