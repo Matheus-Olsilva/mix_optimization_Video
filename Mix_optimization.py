@@ -269,5 +269,3 @@ class ProductionMix(Scene):
         
         self.play(Write(mensagem))
         self.wait(4)
-
-# Para executar: manim -pql seu_arquivo.py ProductionMix
