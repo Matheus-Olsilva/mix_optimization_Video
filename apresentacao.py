@@ -270,7 +270,7 @@ class ProductionMix(Scene):
 
         texto_fun_obj = Tex(
             r"\raggedright " 
-            r"O nosso objetivo é maximizar o lucro total, que é a soma das margens de contribuição unitárias",
+            r"O nosso objetivo é maximizar o lucro total, que é a soma das margens de contribuição unitárias multiplicadas pelas quantidades de cada item: \\",
             font_size=32
         ).next_to(texto_variaveis, DOWN, aligned_edge=LEFT, buff=0.4)
 
@@ -405,10 +405,10 @@ class ProductionMix(Scene):
         ).next_to(restricoes, RIGHT, buff=0.2).shift(RIGHT*1.5+UP*0.6)
 
         capacidades = VGroup(
-            MathTex(r"Leite (L): 0,70x_1 + 0,40x_2 \leq 1200"),
-            MathTex(r"Soro (L): 0,16x_1 + 0,32x_2 \leq 460"),
-            MathTex(r"Gordura (kg): 0,25x_1 + 0,33x_2 \leq 650"),
-            MathTex(r"\text{Mão de Obra (h)}: 0,05x_1 + 0,09x_2 \leq 170")).arrange(DOWN, buff=0.4).scale(0.55).next_to(complementar_onde_texto2, DOWN).to_edge(LEFT)
+            MathTex(r"\leq 1200"),
+            MathTex(r"\leq 460"),
+            MathTex(r"\leq 650"),
+            MathTex(r"\leq 170")).arrange(DOWN, buff=0.6).scale(0.55).next_to(restricoes, RIGHT)
     
         Demanda_modelo = VGroup(
             MathTex(r"\text{Demanda de iogurte: } x_1 \geq 320"),
@@ -449,7 +449,7 @@ class ProductionMix(Scene):
         self.wait(2)
         self.play(FadeOut(retangulo_destaque_var))
 
-        self.play(FadeOut(onde_texto1), FadeOut(restricoes), FadeOut(retangulo_destaque))
+        self.play(FadeOut(onde_texto1), FadeOut(retangulo_destaque))
         self.play(Write(onde_texto2, run_time = 4))
         self.wait(2)
 
@@ -466,7 +466,7 @@ class ProductionMix(Scene):
         self.wait(1)
         self.play(Write(capacidades, run_time = 5))
         self.wait(2)
-        self.play(FadeOut(onde_texto2), FadeOut(retangulo_destaque1), FadeOut(capacidades), FadeOut(complementar_onde_texto2))
+        self.play(FadeOut(onde_texto2), FadeOut(retangulo_destaque1), FadeOut(capacidades), FadeOut(complementar_onde_texto2), FadeOut(restricoes))
         
         self.play(Write(onde_texto3, run_time = 4))
 
