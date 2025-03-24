@@ -8,168 +8,238 @@ my_template.add_to_preamble(r"""
 
 class grafico(Scene):
     def construct(self):
-        self.grafico()
+        self.modelo()
 
         self.camera.background_color = "#000000"
         config.frame_width = 12
         config.frame_height = 8
         
-    def grafico(self):
+    def modelo(self):
 
-        Resumo_modelo = Tex(
-            r"\raggedright \linespread{1.5}\selectfont " 
-            r"Recapitulando o que abordamos até o momento, temos o seguinte modelo matemático:",
-            font_size=25
-        ).to_edge(LEFT, buff=0.5).shift(UP*2.5)
-    
-        variaveis_decisao = Tex(
-            r"\raggedright \linespread{1.5}\selectfont "
-            r"As variáveis de decisão, que representam a decisão que devemos tomar \\"
-            r"$x_1$ = quantidade de iogurte a ser produzida \\"
-            r"$x_2$ = quantidade de queijo a ser produzida",
-            font_size=25
-        ).next_to(Resumo_modelo, DOWN, aligned_edge=LEFT, buff=0.4)
+     # Grafico
 
-        funcao_objetivo = Tex(
-            r"\raggedright \linespread{1.5}\selectfont "
-            r"Função objetivo: \\"
-            r"Maximizar $Z = 0,80x_1 + 1,15x_2$",
-            font_size=25
-        ).next_to(variaveis_decisao, DOWN, aligned_edge=LEFT, buff=0.4)
+            axes = Axes(
+                x_range=[0, 4000, 1000],
+                y_range=[0, 3500, 1000],
+                x_length=12,
+                y_length=6,
+                axis_config={"include_numbers": True, "font_size": 24},
+            ).add_coordinates()
 
-        restricoes = Tex(
-            r"\raggedright \linespread{1.5}\selectfont "
-            r"Restrições de Capacidade Produtiva: \\"
-            r"$0.70x_1 + 0.40x_2 \leq 1200$ \\"
-            r"$0.16x_1 + 0.32x_2 \leq 460$ \\"
-            r"$0.25x_1 + 0.33x_2 \leq 650$ \\"
-            r"$0.05x_1 + 0.09x_2 \leq 170$",
-            font_size=25
-        ).next_to(funcao_objetivo, DOWN, aligned_edge=LEFT, buff=0.4)
+            # Pontos dos interceptos
+            intercepts = [
+                (1714.29, 0), (0, 3000),   # R1
+                (2875, 0), (0, 1437.5),    # R2
+                (2600, 0), (0, 1969.7),    # R3
+                (3400, 0), (0, 1888.9),    # R4
+                (320, 0),                  # R5
+                (0, 450),                  # R6
+            ]
 
-        restricoes_demanda = Tex(
-            r"\raggedright \linespread{1.5}\selectfont "
-            r"Restrições de Demanda: \\"
-            r"$x_1 \geq 320$ \\"
-            r"$x_2 \geq 450$",
-            font_size=25
-        ).next_to(restricoes, RIGHT, aligned_edge=LEFT, buff=0.4).shift(RIGHT*2.5+UP*0.45)
+            # Criação dos pontos (raio 0.05)
+            dots = VGroup(*[
+                Dot(axes.coords_to_point(x, y), color=BLUE, radius=0.05)
+                for x, y in intercepts
+            ])
 
-        self.play(Write(Resumo_modelo, run_time=2))
-        self.play(Write(variaveis_decisao, run_time=2))
-        self.play(Write(funcao_objetivo, run_time=5))
-        self.play(Write(restricoes, run_time=5))
-        self.play(Write(restricoes_demanda, run_time=5))
-        self.wait(1)
-        self.play(FadeOut(Resumo_modelo), FadeOut(variaveis_decisao))
+            # Animação inicial
+            self.play(Create(axes))
+            self.play(LaggedStartMap(GrowFromCenter, dots, lag_ratio=0.2))
+            self.wait(1)
 
-        # Animação de subida
-        self.play(
-            funcao_objetivo.animate.scale(0.9).shift(UP * 3.0),
-            restricoes.animate.scale(0.9).shift(UP * 3.2),
-            restricoes_demanda.animate.scale(0.9).shift(UP * 3.2+LEFT*0.5),
-            run_time=2
-        )
+            # Definição de todas as retas com setas completas
+            lines_and_equations = [
+                # R1 (↓)
+                (
+                    Line(
+                        axes.coords_to_point(1714.29, 0),
+                        axes.coords_to_point(0, 3000),
+                        color=RED
+                    ),
+                    "R1",
+                    MathTex(r"0.70x_1 + 0.40x_2 \leq 1200", font_size=36)
+                ),
+                # R2 (↓) - Já está correto, sem alterações
+                (
+                    Line(
+                        axes.coords_to_point(2875, 0),
+                        axes.coords_to_point(0, 1437.5),
+                        color=GREEN
+                    ),
+                    "R2",
+                    MathTex(r"0.16x_1 + 0.32x_2 \leq 460", font_size=36)
+                ),
+                # R3 (↓)
+                (
+                    Line(
+                        axes.coords_to_point(2600, 0),
+                        axes.coords_to_point(0, 1969.7),
+                        color=BLUE
+                    ),
+                    "R3",
+                    MathTex(r"0.25x_1 + 0.33x_2 \leq 650", font_size=36)
+                ),
+                # R4 (↓)
+                (
+                    Line(
+                        axes.coords_to_point(3400, 0),
+                        axes.coords_to_point(0, 1888.9),
+                        color=YELLOW
+                    ),
+                    "R4",
+                    MathTex(r"0.05x_1 + 0.09x_2 \leq 170", font_size=36)
+                ),
+                # R5 (→)
+                (
+                    Line(
+                        axes.coords_to_point(320, 0),
+                        axes.coords_to_point(320, 3500),
+                        color=PURPLE
+                    ),
+                    "R5",
+                    MathTex(r"x_1 \geq 320", font_size=36)
+                ),
+                # R6 (↑)
+                (
+                    Line(
+                        axes.coords_to_point(0, 450),
+                        axes.coords_to_point(4000, 450),
+                        color=ORANGE
+                    ),
+                    "R6",
+                    MathTex(r"x_2 \geq 450", font_size=36)
+                ),
+            ]
+            # Criação da legenda completa
+            legend = VGroup()
+            for line, label, equation in lines_and_equations:
+                color = line.get_color()
+                entry = VGroup(
+                    Dot(color=color, radius=0.05),
+                    MathTex(label, font_size=36).set_color(WHITE),
+                    equation.copy()
+                ).arrange(RIGHT, buff=0.3)
+                legend.add(entry)
+            
+            legend.arrange(DOWN, aligned_edge=LEFT, buff=0.4)
+            legend.to_corner(UR, buff=0.5)
+            legend.scale(0.7)
+            legend.set_opacity(0)
+            self.add(legend)
 
-        metodo_grafico = Tex(
-            r"\raggedright \linespread{1.5}\selectfont "
-            r"Para resolver este problema, utilizaremos o Método Gráfico que consiste em \\"
-            r"encontrar a solução ótima do problema através da análise gráfica das restrições do modelo. Vamos começar analisando as restrições de capacidade produtiva:\\",
-            font_size=25
-        ).next_to(restricoes, DOWN, aligned_edge=LEFT, buff=0.5)
+            # Animação sincronizada de retas, setas e legendas
+            for i, (line,label, equation) in enumerate(lines_and_equations):
+                self.play(
+                    Create(line),
+                    legend[i].animate.set_opacity(1).shift(LEFT*0.1),
+                    run_time=2
+                )
+                self.wait(0.5)
 
-        self.play(Write(metodo_grafico, run_time=5))
-        self.play(FadeOut(metodo_grafico))
+            arrow1 = Arrow(
+                start=axes.coords_to_point(1800, 1800),  
+                end=axes.coords_to_point(1600, 1200),  
+                color="#77CF7B",
+                buff=0,
+                max_stroke_width_to_length_ratio=5,
+                max_tip_length_to_length_ratio=0.3
+            )
 
-        resolucao = Tex(
-            r"\raggedright \linespread{1.5}\selectfont "
-            r"Consideraremos as inequações como equações e as representaremos graficamente por meio de retas nos eixos $x_1$ e $x_2$ \\",
-            font_size=25
-        ).next_to(restricoes, DOWN, aligned_edge=LEFT, buff=0.5)
+            arrow2 = Arrow(
+                start=axes.coords_to_point(1200, 2400),  
+                end=axes.coords_to_point(1000, 1800), 
+                color="#77CF7B",
+                buff=0,
+                max_stroke_width_to_length_ratio=5,
+                max_tip_length_to_length_ratio=0.3
+            )
 
+            arrow3 = Arrow(
+                start=axes.coords_to_point(500, 3000),  
+                end=axes.coords_to_point(900, 3000), 
+                color="#77CF7B",
+                buff=0,
+                max_stroke_width_to_length_ratio=5,
+                max_tip_length_to_length_ratio=0.3
+            )
 
-        restricoes2 = MathTex(
-            r"""
-            0.70x_1 + 0.40x_2 &= 1200 \\
-            0.16x_1 + 0.32x_2 &= 460 \\
-            0.25x_1 + 0.33x_2 &= 650 \\
-            0.05x_1 + 0.09x_2 &= 170
-            """,
-            font_size=25
-        ).next_to(resolucao, DOWN, aligned_edge=LEFT, buff=0.4)
-
-        self.play(Write(resolucao, run_time=5))
-        self.play(Write(restricoes2, run_time=5))
-
-        self.play(FadeOut(restricoes2))
-
-        restricoes3 = MathTex(
-            r"0.70x_1 + 0.40x_2 &= 1200\\",
-            r"\quad \text{Para } x_1 = 0 &\rightarrow 0.40x_2 = 1200 \rightarrow x_2 = 3000\\",
-            r"\quad \text{Para } x_2 = 0 &\rightarrow 0.70x_1 = 1200 \rightarrow x_1 = 1714.29\\",
-            r"0.16x_1 + 0.32x_2 &= 460\\",
-            r"\quad \text{Para } x_1 = 0 &\rightarrow 0.32x_2 = 460 \rightarrow x_2 = 1437.5\\",
-            r"\quad \text{Para } x_2 = 0 &\rightarrow 0.16x_1 = 460 \rightarrow x_1 = 2875\\",
-            font_size=25
-        ).next_to(resolucao, DOWN, aligned_edge=LEFT, buff=0.4)
-
-        restricoes4 = MathTex(r"0.25x_1 + 0.33x_2 &= 650\\",
-            r"\quad \text{Para } x_1 = 0 &\rightarrow 0.33x_2 = 650 \rightarrow x_2 = 1969.7\\",
-            r"\quad \text{Para } x_2 = 0 &\rightarrow 0.25x_1 = 650 \rightarrow x_1 = 2600\\",
-            r"0.05x_1 + 0.09x_2 &= 170\\",
-            r"\quad \text{Para } x_1 = 0 &\rightarrow 0.09x_2 = 170 \rightarrow x_2 = 1888.9\\",
-            r"\quad \text{Para } x_2 = 0 &\rightarrow 0.05x_1 = 170 \rightarrow x_1 = 3400", font_size=25
-        ).next_to(restricoes3, RIGHT, aligned_edge=LEFT, buff=0.4).shift(RIGHT*3.0)
-
-        
-        self.play(Write(restricoes3), run_time=10)
-        self.play(Write(restricoes4), run_time=10)
-        self.play(FadeOut(resolucao), FadeOut(restricoes), FadeOut(funcao_objetivo), FadeOut(restricoes_demanda))
-
-        # Animação de subida
-
-        self.play(
-            restricoes3.animate.scale(0.9).shift(UP * 4.0),
-            restricoes4.animate.scale(0.9).shift(UP * 4.0),
-            run_time=2
-        )
-        restricoes = [
-            [MathTex("0.70x_1 + 0.40x_2 = 1200"), Tex("1714.29"), Tex("3000")],
-            [MathTex("0.16x_1 + 0.32x_2 = 460"), Tex("2875"), Tex("1437.5")],
-            [MathTex("0.25x_1 + 0.33x_2 = 650"), Tex("2600"), Tex("1969.7")],
-            [MathTex("0.05x_1 + 0.09x_2 = 170"), Tex("3400"), Tex("1888.9")]
-        ]
+            arrow4 = Arrow(
+                start=axes.coords_to_point(2800, 600),  
+                end=axes.coords_to_point(2800, 1200), 
+                color="#77CF7B",
+                buff=0,
+                max_stroke_width_to_length_ratio=5,
+                max_tip_length_to_length_ratio=0.3
+            )
 
 
-        # Dados já formatados como MObjects
-        dados = [
-            [MathTex("0.70x_1 + 0.40x_2 = 1200"), Tex("1714.29"), Tex("3000")],
-            [MathTex("0.16x_1 + 0.32x_2 = 460"), Tex("2875"), Tex("1437.5")],
-            [MathTex("0.25x_1 + 0.33x_2 = 650"), Tex("2600"), Tex("1969.7")],
-            [MathTex("0.05x_1 + 0.09x_2 = 170"), Tex("3400"), Tex("1888.9")]
-        ]
+            setas = VGroup(arrow1, arrow2, arrow3, arrow4)
 
-        # Função de conversão personalizada
-        def convert_element(element):
-            return element  # Retorna o próprio elemento já formatado
+            # Animação
+            self.play(LaggedStartMap(Create, setas, lag_ratio=0.3))
+            self.wait(2)
 
-        # Criação da tabela
-        tabela = Table(
-            table=dados,
-            row_labels=[Text(f"R{i+1}") for i in range(4)],
-            col_labels=[
-                MathTex("\\text{Restrição}"),
-                MathTex("\\text{Intercepto } x_1"),
-                MathTex("\\text{Intercepto } x_2")
-            ],
-            include_outer_lines=True,
-            line_config={"stroke_width": 1},
-            v_buff=0.6,
-            h_buff=1.2,
-            element_to_mobject=convert_element  
-        ).scale(0.6)
+            # explicação das setas
 
-        # Posicionamento e animação
-        tabela.to_edge(DOWN, buff=0.5)
-        self.play(Create(tabela), run_time=2)
-        self.wait()
+            explicacao = Tex(r"As setas sinalizam o sentido das desigualdades\\"
+                            r"em cada restrição,"
+                            r"apontando a região de solução", font_size=24).next_to(legend, LEFT, buff=0.5)
+
+            self.play(Write(explicacao, run_time = 2))
+            self.wait(2)
+            self.play(FadeOut(explicacao))
+
+            self.play(FadeOut(setas))
+
+            # Definição das interseções relevantes
+            intersections = [
+                ((320, 450), ["R5", "R6"]),     # R5 ∩ R6
+                ((1457.14, 450), ["R1", "R6"]), # R1 ∩ R6
+                ((1250, 812.5), ["R1", "R2"]),  # R1 ∩ R2
+                ((320, 1277.5), ["R2", "R5"])   # R2 ∩ R5
+            ]
+
+            # Criação dos destaques de interseção
+            intersection_dots = VGroup()
+            intersection_labels = VGroup()
+            
+            for point, labels in intersections:
+                x, y = point
+                dot = Dot(axes.coords_to_point(x, y), color=YELLOW, radius=0.1)
+                label = MathTex(f"{{{', '.join(labels)}}}", font_size=30, color=WHITE)
+                label.next_to(dot, UP, buff=0.2)
+                intersection_dots.add(dot)
+                intersection_labels.add(label)
+
+            # Animação dos destaques
+            self.play(
+                LaggedStartMap(GrowFromCenter, intersection_dots, lag_ratio=0.2),
+                LaggedStartMap(FadeIn, intersection_labels, shift=UP, lag_ratio=0.2),
+                run_time=3
+            )
+            self.wait(1)
+
+            # Cálculo da região viável
+            feasible_region = Polygon(
+                axes.coords_to_point(320, 450),
+                axes.coords_to_point(1457.14, 450),
+                axes.coords_to_point(1250, 812.5),
+                axes.coords_to_point(320, 1277.5),
+                color=WHITE,
+                fill_color=BLUE,
+                fill_opacity=0.3
+            )
+
+            # Animação da região viável
+            self.play(FadeIn(feasible_region))
+            self.wait(3)
+
+
+            # explicação região viável
+
+            explicacao_regiao = Tex(r"A região viável indica o espaço de solução,\\"
+                                    r"que satisfaz todas as restrições", font_size=24).next_to(legend, LEFT, buff=0.5)
+
+            self.play(Write(explicacao_regiao, run_time = 2))
+            self.wait(2)
+            self.play(FadeOut(explicacao_regiao))
