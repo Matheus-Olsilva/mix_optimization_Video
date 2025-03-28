@@ -128,7 +128,7 @@ class grafico(Scene):
             self.add(legend)
 
             # Animação sincronizada de retas, setas e legendas
-            for i, (line,label, equation) in enumerate(lines_and_equations):
+            for i, (line, label, equation) in enumerate(lines_and_equations):
                 self.play(
                     Create(line),
                     legend[i].animate.set_opacity(1).shift(LEFT*0.1),
@@ -136,6 +136,7 @@ class grafico(Scene):
                 )
                 self.wait(0.5)
 
+            # Criação das setas (sem animação de piscar)
             arrow1 = Arrow(
                 start=axes.coords_to_point(1800, 1800),  
                 end=axes.coords_to_point(1600, 1200),  
@@ -155,8 +156,8 @@ class grafico(Scene):
             )
 
             arrow3 = Arrow(
-                start=axes.coords_to_point(500, 3000),  
-                end=axes.coords_to_point(900, 3000), 
+                start=axes.coords_to_point(500, 2700),  
+                end=axes.coords_to_point(900, 2700), 
                 color="#77CF7B",
                 buff=0,
                 max_stroke_width_to_length_ratio=5,
@@ -172,24 +173,28 @@ class grafico(Scene):
                 max_tip_length_to_length_ratio=0.3
             )
 
+            # Lista de setas para animação sequencial
+            arrows = [arrow1, arrow2, arrow3, arrow4]
 
-            setas = VGroup(arrow1, arrow2, arrow3, arrow4)
+            # Anima cada seta individualmente
+            for arrow in arrows:
+                self.play(Create(arrow), run_time=1.5)  # Duração de 1.5 segundos por seta
+                self.wait(0.3)  # Pequena pausa entre setas
 
-            # Animação
-            self.play(LaggedStartMap(Create, setas, lag_ratio=0.3))
-            self.wait(2)
+            self.wait(2)  # Tempo final para visualização
 
             # explicação das setas
 
             explicacao = Tex(r"As setas sinalizam o sentido das desigualdades\\"
-                            r"em cada restrição,"
-                            r"apontando a região de solução", font_size=24).next_to(legend, LEFT, buff=0.5)
+                            r"em cada restrição, "
+                            r"apontando a região de solução", font_size=30).next_to(legend, LEFT, buff=0.5).shift(UP*1)
 
             self.play(Write(explicacao, run_time = 2))
-            self.wait(2)
+            self.wait(4)
             self.play(FadeOut(explicacao))
 
-            self.play(FadeOut(setas))
+            arrows_group = VGroup(*arrows)
+            self.play(FadeOut(arrows_group))
 
             # Definição das interseções relevantes
             intersections = [
@@ -229,17 +234,30 @@ class grafico(Scene):
                 fill_color=BLUE,
                 fill_opacity=0.3
             )
+            # explicação região viável
+
+            explicacao_regiao = Tex(r"A região viável indica o espaço de solução,\\"
+                                    r"que satisfaz todas as restrições", font_size=24).next_to(legend, LEFT, buff=0.5).shift(LEFT*1)
+            
+
+            arrow5 = Arrow(
+            start=explicacao_regiao.get_center() + DOWN*0.5,  
+            end=feasible_region.get_center(),  
+            color="#605CEA",
+            buff=0,
+            max_stroke_width_to_length_ratio=5,
+            max_tip_length_to_length_ratio=0.3)
+
+            # Animação do texto
+            self.play(Write(explicacao_regiao, run_time = 2))
+            self.wait(4)
+
+            # Animação das setas
+            self.play(Create(arrow5), run_time = 2)
+            self.wait(3)
 
             # Animação da região viável
             self.play(FadeIn(feasible_region))
             self.wait(3)
 
-
-            # explicação região viável
-
-            explicacao_regiao = Tex(r"A região viável indica o espaço de solução,\\"
-                                    r"que satisfaz todas as restrições", font_size=24).next_to(legend, LEFT, buff=0.5)
-
-            self.play(Write(explicacao_regiao, run_time = 2))
-            self.wait(2)
             self.play(FadeOut(explicacao_regiao))
