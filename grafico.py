@@ -95,6 +95,7 @@ class grafico(Scene):
 
         # Criação da legenda
         legend = VGroup()
+        all_line_dots = []  # Armazena todos os pontos das retas
         for line, label, equation, _ in lines_and_equations:
             color = line.get_color()
             entry = VGroup(
@@ -120,6 +121,7 @@ class grafico(Scene):
                 Dot(axes.coords_to_point(x, y), color=line.get_color(), radius=0.07)
                 for x, y in intercepts
             ])
+            all_line_dots.append(line_dots)  # Armazena os pontos
 
             # Animação combinada
             self.play(
@@ -197,27 +199,30 @@ class grafico(Scene):
             Line(axes.coords_to_point(320, 450), axes.coords_to_point(1457.14, 450), color=ORANGE)
         )
 
-        # Remoção de linhas não-essenciais
+        # Remoção de linhas não-essenciais e seus pontos
         non_boundary_indices = [2, 3]  # R3 e R4
         non_boundary_lines = VGroup(*[lines_and_equations[i][0] for i in non_boundary_indices])
-        non_boundary_legend = VGroup(*[legend[i] for i in non_boundary_indices])
+        non_boundary_dots = VGroup(*[all_line_dots[i] for i in non_boundary_indices])
 
         self.play(
             FadeOut(non_boundary_lines),
-            FadeOut(non_boundary_legend),
+            FadeOut(non_boundary_dots),  
             run_time=1.5
         )
 
         # Transição para região viável
-        original_lines = VGroup(lines_and_equations[0][0], lines_and_equations[1][0],
-                                lines_and_equations[4][0], lines_and_equations[5][0])
+        original_line_indices = [0, 1, 4, 5]  # R1, R2, R5, R6
+        original_lines = VGroup(*[lines_and_equations[i][0] for i in original_line_indices])
+        original_dots = VGroup(*[all_line_dots[i] for i in original_line_indices])
 
         self.play(
             FadeOut(original_lines),
+            FadeOut(original_dots),  
             Create(clipped_lines),
             FadeIn(feasible_region),
             run_time=2
         )
+
         # Explicação final
         explicacao_regiao = Tex(r"A região viável indica o espaço de solução,\\que satisfaz todas as restrições", 
                                 font_size=24).next_to(legend, LEFT, buff=0.5).shift(LEFT*1)
