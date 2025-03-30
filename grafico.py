@@ -33,7 +33,8 @@ class grafico(Scene):
                     color=RED
                 ),
                 "R1",
-                MathTex(r"0.70x_1 + 0.40x_2 \leq 1200", font_size=36)
+                MathTex(r"0.70x_1 + 0.40x_2 \leq 1200", font_size=36),
+                [(1714.29, 0), (0, 3000)]  # Interceptos específicos
             ),
             # R2 (↓)
             (
@@ -43,7 +44,8 @@ class grafico(Scene):
                     color=GREEN
                 ),
                 "R2",
-                MathTex(r"0.16x_1 + 0.32x_2 \leq 460", font_size=36)
+                MathTex(r"0.16x_1 + 0.32x_2 \leq 460", font_size=36),
+                [(2875, 0), (0, 1437.5)]
             ),
             # R3 (↓)
             (
@@ -53,7 +55,8 @@ class grafico(Scene):
                     color=BLUE
                 ),
                 "R3",
-                MathTex(r"0.25x_1 + 0.33x_2 \leq 650", font_size=36)
+                MathTex(r"0.25x_1 + 0.33x_2 \leq 650", font_size=36),
+                [(2600, 0), (0, 1969.7)]
             ),
             # R4 (↓)
             (
@@ -63,7 +66,8 @@ class grafico(Scene):
                     color=YELLOW
                 ),
                 "R4",
-                MathTex(r"0.05x_1 + 0.09x_2 \leq 170", font_size=36)
+                MathTex(r"0.05x_1 + 0.09x_2 \leq 170", font_size=36),
+                [(3400, 0), (0, 1888.9)]
             ),
             # R5 (→)
             (
@@ -73,7 +77,8 @@ class grafico(Scene):
                     color=PURPLE
                 ),
                 "R5",
-                MathTex(r"x_1 \geq 320", font_size=36)
+                MathTex(r"x_1 \geq 320", font_size=36),
+                [(320, 0)]  # Intercepto único
             ),
             # R6 (↑)
             (
@@ -83,13 +88,14 @@ class grafico(Scene):
                     color=ORANGE
                 ),
                 "R6",
-                MathTex(r"x_2 \geq 450", font_size=36)
+                MathTex(r"x_2 \geq 450", font_size=36),
+                [(0, 450)]  # Intercepto único
             ),
         ]
 
-        # Criação da legenda completa
+        # Criação da legenda
         legend = VGroup()
-        for line, label, equation in lines_and_equations:
+        for line, label, equation, _ in lines_and_equations:
             color = line.get_color()
             entry = VGroup(
                 Dot(color=color, radius=0.05),
@@ -107,108 +113,64 @@ class grafico(Scene):
         self.play(Create(axes))
         self.wait(1)
 
-        # Lista de interceptos (agora associados às linhas)
-        intercepts = [
-            (1714.29, 0), (0, 3000),   # R1
-            (2875, 0), (0, 1437.5),    # R2
-            (2600, 0), (0, 1969.7),    # R3
-            (3400, 0), (0, 1888.9),    # R4
-            (320, 0),                  # R5
-            (0, 450),                  # R6
-        ]
-
-        # Animação sincronizada de retas, pontos e legendas
-        for i, (line, label, equation) in enumerate(lines_and_equations):
-            # Determina os pontos de intercepto para esta linha
-            if i < 4:
-                line_intercepts = intercepts[2*i : 2*i+2]
-            elif i == 4:
-                line_intercepts = [intercepts[8]]
-            else:
-                line_intercepts = [intercepts[9]]
-
+        # Animação sincronizada de retas e pontos
+        for i, (line, label, equation, intercepts) in enumerate(lines_and_equations):
             # Cria pontos com a cor da linha
-            line_color = line.get_color()
             line_dots = VGroup(*[
-                Dot(axes.coords_to_point(x, y), color=line_color, radius=0.05)
-                for x, y in line_intercepts
+                Dot(axes.coords_to_point(x, y), color=line.get_color(), radius=0.07)
+                for x, y in intercepts
             ])
 
             # Animação combinada
             self.play(
                 Create(line),
-                LaggedStartMap(GrowFromCenter, line_dots, lag_ratio=0.2),
+                LaggedStartMap(GrowFromCenter, line_dots, lag_ratio=0.3),
                 legend[i].animate.set_opacity(1).shift(LEFT*0.1),
-                run_time=2
+                run_time=2.5
             )
             self.wait(0.5)
 
-        # Restante da animação (setas, região viável, etc.)
-        arrow1 = Arrow(
-            start=axes.coords_to_point(1800, 1800),  
-            end=axes.coords_to_point(1600, 1200),  
-            color="#77CF7B",
-            buff=0,
-            max_stroke_width_to_length_ratio=5,
-            max_tip_length_to_length_ratio=0.3
+        # Setas de direção
+        arrows = VGroup(
+            Arrow(axes.coords_to_point(1800, 1800), axes.coords_to_point(1600, 1200), color="#77CF7B", buff=0),
+            Arrow(axes.coords_to_point(1200, 2400), axes.coords_to_point(1000, 1800), color="#77CF7B", buff=0),
+            Arrow(axes.coords_to_point(500, 2700), axes.coords_to_point(900, 2700), color="#77CF7B", buff=0),
+            Arrow(axes.coords_to_point(2800, 600), axes.coords_to_point(2800, 1200), color="#77CF7B", buff=0)
         )
-        arrow2 = Arrow(
-            start=axes.coords_to_point(1200, 2400),  
-            end=axes.coords_to_point(1000, 1800), 
-            color="#77CF7B",
-            buff=0,
-            max_stroke_width_to_length_ratio=5,
-            max_tip_length_to_length_ratio=0.3
-        )
-        arrow3 = Arrow(
-            start=axes.coords_to_point(500, 2700),  
-            end=axes.coords_to_point(900, 2700), 
-            color="#77CF7B",
-            buff=0,
-            max_stroke_width_to_length_ratio=5,
-            max_tip_length_to_length_ratio=0.3
-        )
-        arrow4 = Arrow(
-            start=axes.coords_to_point(2800, 600),  
-            end=axes.coords_to_point(2800, 1200), 
-            color="#77CF7B",
-            buff=0,
-            max_stroke_width_to_length_ratio=5,
-            max_tip_length_to_length_ratio=0.3
-        )
+        arrows.set(max_stroke_width_to_length_ratio=5, max_tip_length_to_length_ratio=0.3)
 
-        arrows = [arrow1, arrow2, arrow3, arrow4]
+        # Animação das setas
         for arrow in arrows:
             self.play(Create(arrow), run_time=1.5)
             self.wait(0.3)
         self.wait(2)
 
-        explicacao = Tex(r"As setas sinalizam o sentido das desigualdades\\"
-                        r"em cada restrição, "
-                        r"apontando a região de solução", font_size=30).next_to(legend, LEFT, buff=0.5).shift(UP*1)
-        self.play(Write(explicacao, run_time = 2))
+        # Explicação das setas
+        explicacao = Tex(r"As setas sinalizam o sentido das desigualdades\\em cada restrição, apontando a região de solução", 
+                        font_size=30).next_to(legend, LEFT, buff=0.5).shift(UP*1)
+        self.play(Write(explicacao, run_time=2))
         self.wait(4)
-        self.play(FadeOut(explicacao))
-        arrows_group = VGroup(*arrows)
-        self.play(FadeOut(arrows_group))
+        self.play(FadeOut(explicacao), FadeOut(arrows))
 
+        # Interseções relevantes
         intersections = [
-            ((320, 450), ["R5", "R6"]),     
-            ((1457.14, 450), ["R1", "R6"]), 
-            ((1250, 812.5), ["R1", "R2"]),  
-            ((320, 1277.5), ["R2", "R5"])   
+            ((320, 450), ["R5", "R6"]),
+            ((1457.14, 450), ["R1", "R6"]),
+            ((1250, 812.5), ["R1", "R2"]),
+            ((320, 1277.5), ["R2", "R5"])
         ]
 
+        # Criação dos destaques
         intersection_dots = VGroup()
         intersection_labels = VGroup()
         for point, labels in intersections:
             x, y = point
             dot = Dot(axes.coords_to_point(x, y), color=YELLOW, radius=0.1)
-            label = MathTex(f"{{{', '.join(labels)}}}", font_size=30, color=WHITE)
-            label.next_to(dot, UP, buff=0.2)
+            label = MathTex(f"{{{', '.join(labels)}}}", font_size=30, color=WHITE).next_to(dot, UP, buff=0.2)
             intersection_dots.add(dot)
             intersection_labels.add(label)
 
+        # Animação dos destaques
         self.play(
             LaggedStartMap(GrowFromCenter, intersection_dots, lag_ratio=0.2),
             LaggedStartMap(FadeIn, intersection_labels, shift=UP, lag_ratio=0.2),
@@ -216,44 +178,54 @@ class grafico(Scene):
         )
         self.wait(1)
 
+        # Região viável
         feasible_region = Polygon(
             axes.coords_to_point(320, 450),
             axes.coords_to_point(1457.14, 450),
             axes.coords_to_point(1250, 812.5),
             axes.coords_to_point(320, 1277.5),
-            color=WHITE,
             fill_color=BLUE,
-            fill_opacity=0.3
+            fill_opacity=0.3,
+            stroke_opacity=0  # Remove borda branca
         )
 
-        explicacao_regiao = Tex(r"A região viável indica o espaço de solução,\\"
-                                r"que satisfaz todas as restrições", font_size=24).next_to(legend, LEFT, buff=0.5).shift(LEFT*1)
-        arrow5 = Arrow(
-            start=explicacao_regiao.get_center() + DOWN*0.5,  
-            end=feasible_region.get_center(),  
-            color="#605CEA",
-            buff=0,
-            max_stroke_width_to_length_ratio=5,
-            max_tip_length_to_length_ratio=0.3)
-        
-        self.play(Write(explicacao_regiao, run_time = 2))
-        self.wait(4)
-        self.play(Create(arrow5), run_time = 2)
-        self.wait(3)
-        self.play(FadeIn(feasible_region))
+        # Linhas recortadas
+        clipped_lines = VGroup(
+            Line(axes.coords_to_point(1457.14, 450), axes.coords_to_point(1250, 812.5), color=RED),
+            Line(axes.coords_to_point(1250, 812.5), axes.coords_to_point(320, 1277.5), color=GREEN),
+            Line(axes.coords_to_point(320, 450), axes.coords_to_point(320, 1277.5), color=PURPLE),
+            Line(axes.coords_to_point(320, 450), axes.coords_to_point(1457.14, 450), color=ORANGE)
+        )
 
-        boundary_lines_indices = [0, 1, 4, 5]
-        non_boundary_lines = VGroup()
-        non_boundary_legend = VGroup()
-        for i, (line, _, _) in enumerate(lines_and_equations):
-            if i not in boundary_lines_indices:
-                non_boundary_lines.add(line)
-                non_boundary_legend.add(legend[i])
+        # Remoção de linhas não-essenciais
+        non_boundary_indices = [2, 3]  # R3 e R4
+        non_boundary_lines = VGroup(*[lines_and_equations[i][0] for i in non_boundary_indices])
+        non_boundary_legend = VGroup(*[legend[i] for i in non_boundary_indices])
 
         self.play(
             FadeOut(non_boundary_lines),
             FadeOut(non_boundary_legend),
+            run_time=1.5
+        )
+
+        # Transição para região viável
+        original_lines = VGroup(lines_and_equations[0][0], lines_and_equations[1][0],
+                                lines_and_equations[4][0], lines_and_equations[5][0])
+
+        self.play(
+            FadeOut(original_lines),
+            Create(clipped_lines),
+            FadeIn(feasible_region),
             run_time=2
         )
-        self.wait(5)
-        self.play(FadeOut(explicacao_regiao))
+        # Explicação final
+        explicacao_regiao = Tex(r"A região viável indica o espaço de solução,\\que satisfaz todas as restrições", 
+                                font_size=24).next_to(legend, LEFT, buff=0.5).shift(LEFT*1)
+        arrow5 = Arrow(explicacao_regiao.get_center() + DOWN*0.5, feasible_region.get_center(), 
+                      color="#605CEA", buff=0, max_stroke_width_to_length_ratio=5,
+                      max_tip_length_to_length_ratio=0.3)
+
+        self.play(Write(explicacao_regiao, run_time=2))
+        self.play(Create(arrow5))
+        self.wait(6)
+        self.play(FadeOut(explicacao_regiao), FadeOut(arrow5))
