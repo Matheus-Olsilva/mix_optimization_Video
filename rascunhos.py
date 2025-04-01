@@ -15,17 +15,61 @@ class GraficoOtimizacao(Scene):
         titulo_calculos.to_edge(UP, buff=0.5).shift(LEFT*1.0)
         self.play(Write(titulo_calculos), run_time=1.5)
         
+        # Definição do Teorema Fundamental da Programação Linear
+        definicao = Text("O Teorema Fundamental da Programação Linear afirma que, se existir uma", 
+                         font="IBM Plex Sans", font_size=24).set_color(WHITE)
+        definicao2 = Text("solução ótima para um problema de programação linear, ela estará em",
+                         font="IBM Plex Sans", font_size=24).set_color(WHITE)
+        definicao3 = Text("um dos vértices da região viável.",
+                         font="IBM Plex Sans", font_size=24).set_color(WHITE)
+        
+        # Organizar as linhas da definição
+        grupo_definicao = VGroup(definicao, definicao2, definicao3).arrange(DOWN, aligned_edge=LEFT, buff=0.1)
+        grupo_definicao.next_to(titulo_calculos, DOWN, buff=0.5)
+        
+        # Destacar a palavra "vértices" com a cor #605CEA
+        cor_vertices = "#605CEA"  # Cor roxa/azul especificada
+        
+        # Substituir a palavra "vértices" na terceira linha com a versão destacada
+        texto_terceira_linha = "um dos vértices da região viável."
+        
+        um_dos = Text("um dos ", font="IBM Plex Sans", font_size=24).set_color(WHITE)
+        vertices_text = Text("vértices", font="IBM Plex Sans", font_size=24).set_color(cor_vertices)
+        da_regiao = Text(" da região viável.", font="IBM Plex Sans", font_size=24).set_color(WHITE)
+        
+        # Alinhar os textos com espaçamento adequado
+        linha_modificada = VGroup(um_dos, vertices_text, da_regiao).arrange(RIGHT, buff=0.05)
+        linha_modificada.move_to(definicao3.get_center())
+        
+        # Substituir a terceira linha pela versão modificada
+        grupo_definicao = VGroup(definicao, definicao2, linha_modificada).arrange(DOWN, aligned_edge=LEFT, buff=0.1)
+        grupo_definicao.next_to(titulo_calculos, DOWN, buff=0.5)
+        
+        # Animar a definição
+        self.play(Write(definicao), run_time=2)
+        self.play(Write(definicao2), run_time=2)
+        self.play(Write(um_dos), run_time=0.8)
+        self.play(Write(vertices_text), run_time=1, rate_func=rate_functions.linear)
+        self.play(Write(da_regiao), run_time=1.2)
+        
+        # Destacar a palavra "vértices" com a cor específica
+        self.play(Indicate(vertices_text, color="#605CEA", scale_factor=1.2))
+        
+        # Pausa antes de continuar
+        self.wait(2)
+        self.play(FadeOut(grupo_definicao))
+        
         # Calcular e mostrar cada vértice com o gráfico correspondente
         self.calcular_vertice_320_450()
         self.calcular_vertice_1457_450()
         self.calcular_vertice_1250_812()
         self.calcular_vertice_320_1277()
         
-        # # Mostrar a tabela com os valores dos pontos na função objetivo
-        self.mostrar_tabela_funcao_objetivo()
+        # Limpar a tela completamente antes de mostrar a tabela
+        self.clear()
         
-        # Fade out do título principal no final
-        self.play(FadeOut(titulo_calculos))
+        # Mostrar a tabela com os valores dos pontos na função objetivo
+        self.mostrar_tabela_funcao_objetivo()
         
         self.wait(3)
     
@@ -182,8 +226,12 @@ class GraficoOtimizacao(Scene):
         grafico_grupo.to_edge(RIGHT, buff=0.9).shift(DOWN*0.2)
         
         # Animação
-        self.play(Write(titulo), run_time=1.5)
-        self.play(LaggedStartMap(FadeIn, calculos, lag_ratio=0.2), run_time=2)
+        self.play(Write(titulo), run_time=2)
+        
+        # Animar cada linha individualmente com Write
+        for linha in calculos:
+            self.play(Write(linha), run_time=2)
+            
         self.play(FadeIn(titulo_grafico), Create(grafico), run_time=2)
         
         # Destaque adicional para o ponto
@@ -220,8 +268,12 @@ class GraficoOtimizacao(Scene):
         grafico_grupo.to_edge(RIGHT, buff=0.9).shift(DOWN*0.2)
         
         # Animação
-        self.play(Write(titulo), run_time=1.5)
-        self.play(LaggedStartMap(FadeIn, calculos, lag_ratio=0.2), run_time=2)
+        self.play(Write(titulo), run_time=2)
+        
+        # Animar cada linha individualmente com Write
+        for linha in calculos:
+            self.play(Write(linha), run_time=2)
+            
         self.play(FadeIn(titulo_grafico), Create(grafico), run_time=2)
         self.play(Circumscribe(grafico[1], color=YELLOW, time_width=2, run_time=2, stroke_width=5))
         
@@ -263,8 +315,12 @@ class GraficoOtimizacao(Scene):
         grafico_grupo.to_edge(RIGHT, buff=0.7).shift(DOWN*0.2)
         
         # Animação
-        self.play(Write(titulo), run_time=1.5)
-        self.play(LaggedStartMap(FadeIn, calculos, lag_ratio=0.2), run_time=3)
+        self.play(Write(titulo), run_time=2)
+        
+        # Animar cada linha individualmente com Write
+        for linha in calculos:
+            self.play(Write(linha), run_time=2)
+            
         self.play(FadeIn(titulo_grafico), Create(grafico), run_time=2)
         
         # Destaque das equações em uso
@@ -307,8 +363,12 @@ class GraficoOtimizacao(Scene):
         grafico_grupo.to_edge(RIGHT, buff=0.7).shift(DOWN*0.2)
         
         # Animação
-        self.play(Write(titulo), run_time=1.5)
-        self.play(LaggedStartMap(FadeIn, calculos, lag_ratio=0.2), run_time=2)
+        self.play(Write(titulo), run_time=2)
+        
+        # Animar cada linha individualmente com Write
+        for linha in calculos:
+            self.play(Write(linha), run_time=2)
+            
         self.play(FadeIn(titulo_grafico), Create(grafico), run_time=2)
         self.play(Circumscribe(grafico[1], color=YELLOW, time_width=2, run_time=2, stroke_width=5))
         
@@ -409,8 +469,8 @@ class GraficoOtimizacao(Scene):
             grafico_grupo.align_to(config.frame_width - 0.5, RIGHT)
         
         # Animação
-        self.play(Write(titulo_tabela), run_time=1.5)
-        self.play(Write(funcao_objetivo), run_time=1.5)
+        self.play(Write(titulo_tabela), run_time=2)
+        self.play(Write(funcao_objetivo), run_time=2)
         self.play(
             Create(box),
             Write(cabecalho),
@@ -419,9 +479,12 @@ class GraficoOtimizacao(Scene):
         
         # Mostrar cada linha da tabela uma por uma
         for i in range(1, len(tabela)):
-            self.play(FadeIn(tabela[i]), run_time=0.5)
+            self.play(Write(tabela[i]), run_time=2)
         
-        self.play(FadeIn(solucao_grupo), Create(grafico_final), run_time=2)
+        # Animar a solução ótima e o gráfico
+        self.play(Write(titulo_otimo), run_time=2)
+        self.play(Write(valor_otimo), run_time=2)
+        self.play(Create(grafico_final), run_time=2)
         
         # Destaque para o valor máximo
         destaque_max = Circumscribe(
