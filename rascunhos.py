@@ -37,8 +37,8 @@ class GraficoOtimizacao(Scene):
         vertices_text = Text("vértices", font="IBM Plex Sans", font_size=24).set_color(cor_vertices)
         da_regiao = Text(" da região viável.", font="IBM Plex Sans", font_size=24).set_color(WHITE)
         
-        # Alinhar os textos com espaçamento adequado
-        linha_modificada = VGroup(um_dos, vertices_text, da_regiao).arrange(RIGHT, buff=0.05)
+        # Alinhar os textos com espaçamento adequado - AUMENTADO O BUFFER para separar "vértices"
+        linha_modificada = VGroup(um_dos, vertices_text, da_regiao).arrange(RIGHT, buff=0.2)
         linha_modificada.move_to(definicao3.get_center())
         
         # Substituir a terceira linha pela versão modificada
@@ -192,8 +192,8 @@ class GraficoOtimizacao(Scene):
         # Criando uma label para o ponto
         label = MathTex(f"({x}, {y})", font_size=20, color=WHITE).next_to(ponto_destacado, UR, buff=0.1)
         
-        # Título do gráfico (agora como parte do grupo)
-        titulo_grafico = Text(titulo_ponto, font="IBM Plex Sans", font_size=24, color=WHITE)
+        # Título do gráfico - agora removendo informação redundante do vértice
+        titulo_grafico = Text("Gráfico da Região Viável", font="IBM Plex Sans", font_size=24, color=WHITE)
         titulo_grafico.next_to(grafico, UP, buff=0.2)
         
         # Adicionando tudo ao grupo
@@ -202,8 +202,8 @@ class GraficoOtimizacao(Scene):
         return grupo_grafico, titulo_grafico
     
     def calcular_vertice_320_450(self):
-        # Título e cálculos do primeiro vértice
-        titulo = Text("Vértice (320; 450)", font="IBM Plex Sans", font_size=25, color=WHITE).shift(LEFT*2.0)
+        # Título mostrando apenas as retas que se cruzam
+        titulo = Text("Interseção de R5 e R6", font="IBM Plex Sans", font_size=25, color=WHITE)
         
         calculos = VGroup(
             MathTex(r"\text{Interseção direta das restrições de demanda:}", font_size=25),
@@ -213,12 +213,12 @@ class GraficoOtimizacao(Scene):
         
         # Posicionar todos os elementos à esquerda com mais espaço
         grupo_esquerda = VGroup(titulo, calculos).arrange(DOWN, buff=0.4, aligned_edge=LEFT)
-        grupo_esquerda.to_edge(LEFT, buff=1.7).shift(LEFT*1.5)
+        grupo_esquerda.to_edge(LEFT, buff=1.0)  # Ajuste da posição para a esquerda
         
         # Criar gráfico para o ponto (320, 450)
         grafico, titulo_grafico = self.criar_grafico_com_destaque(ponto=(320, 450), titulo_ponto="Vértice (320; 450)")
         
-        # Colocar o título do gráfico acima do grupo esquerda
+        # Colocar o título do gráfico acima do grupo direita
         titulo_grafico.next_to(grafico, UP, buff=0.2)
         
         # Posicionar o gráfico à direita
@@ -242,8 +242,8 @@ class GraficoOtimizacao(Scene):
         self.play(FadeOut(grupo_esquerda), FadeOut(grafico_grupo))
     
     def calcular_vertice_1457_450(self):
-        # Título e cálculos do segundo vértice
-        titulo = Text("Vértice (1457.14; 450)", font="IBM Plex Sans", font_size=25, color=WHITE)
+        # Título mostrando apenas as retas que se cruzam
+        titulo = Text("Interseção de R1 e R6", font="IBM Plex Sans", font_size=25, color=WHITE)
         
         calculos = VGroup(
             MathTex(r"\text{Interseção de R1 com } x_2 = 450\text{:}", font_size=25),
@@ -255,12 +255,12 @@ class GraficoOtimizacao(Scene):
         
         # Posicionar todos os elementos à esquerda com mais espaço
         grupo_esquerda = VGroup(titulo, calculos).arrange(DOWN, buff=0.4, aligned_edge=LEFT)
-        grupo_esquerda.to_edge(LEFT, buff=1.7).shift(LEFT*1.5)
+        grupo_esquerda.to_edge(LEFT, buff=1.0)  # Ajuste da posição para a esquerda
         
         # Criar gráfico para o ponto (1457.14, 450)
         grafico, titulo_grafico = self.criar_grafico_com_destaque(ponto=(1457.14, 450), titulo_ponto="Vértice (1457.14; 450)")
         
-        # Colocar o título do gráfico acima do grupo esquerda
+        # Colocar o título do gráfico acima do grupo direita
         titulo_grafico.next_to(grafico, UP, buff=0.2)
         
         # Posicionar o gráfico à direita
@@ -281,8 +281,8 @@ class GraficoOtimizacao(Scene):
         self.play(FadeOut(grupo_esquerda), FadeOut(grafico_grupo))
     
     def calcular_vertice_1250_812(self):
-        # Título e cálculos do terceiro vértice
-        titulo = Text("Vértice (1250; 812.5)", font="IBM Plex Sans", font_size=25, color=WHITE)
+        # Título mostrando apenas as retas que se cruzam
+        titulo = Text("Interseção de R1 e R2", font="IBM Plex Sans", font_size=25, color=WHITE)
         
         calculos = VGroup(
             MathTex(r"\text{Interseção de R1 e R2:}", font_size=25),
@@ -299,7 +299,7 @@ class GraficoOtimizacao(Scene):
         
         # Posicionar todos os elementos à esquerda com mais espaço
         grupo_esquerda = VGroup(titulo, calculos).arrange(DOWN, buff=0.2, aligned_edge=LEFT)
-        grupo_esquerda.to_edge(LEFT, buff=1.7).shift(LEFT*1.5)
+        grupo_esquerda.to_edge(LEFT, buff=0.7)  # Ajuste da posição para a esquerda
         
         # Ajustar a escala para caber tudo na tela
         grupo_esquerda.scale(0.9)
@@ -307,7 +307,7 @@ class GraficoOtimizacao(Scene):
         # Criar gráfico para o ponto (1250, 812.5)
         grafico, titulo_grafico = self.criar_grafico_com_destaque(ponto=(1250, 812.5), titulo_ponto="Vértice (1250; 812.5)")
         
-        # Colocar o título do gráfico acima do grupo esquerda
+        # Colocar o título do gráfico acima do grupo direita
         titulo_grafico.next_to(grafico, UP, buff=0.2)
         
         # Posicionar o gráfico à direita
@@ -336,8 +336,8 @@ class GraficoOtimizacao(Scene):
         self.play(FadeOut(grupo_esquerda), FadeOut(grafico_grupo))
     
     def calcular_vertice_320_1277(self):
-        # Título e cálculos do quarto vértice
-        titulo = Text("Vértice (320; 1277.5)", font="IBM Plex Sans", font_size=25, color=WHITE)
+        # Título mostrando apenas as retas que se cruzam
+        titulo = Text("Interseção de R2 e R5", font="IBM Plex Sans", font_size=25, color=WHITE)
         
         calculos = VGroup(
             MathTex(r"\text{Interseção de R2 com } x_1 = 320\text{:}", font_size=25),
@@ -350,12 +350,12 @@ class GraficoOtimizacao(Scene):
         
         # Posicionar todos os elementos à esquerda com mais espaço
         grupo_esquerda = VGroup(titulo, calculos).arrange(DOWN, buff=0.4, aligned_edge=LEFT)
-        grupo_esquerda.to_edge(LEFT, buff=1.7).shift(LEFT*1.5)
+        grupo_esquerda.to_edge(LEFT, buff=1.0)  # Ajuste da posição para a esquerda
         
         # Criar gráfico para o ponto (320, 1277.5)
         grafico, titulo_grafico = self.criar_grafico_com_destaque(ponto=(320, 1277.5), titulo_ponto="Vértice (320; 1277.5)")
         
-        # Colocar o título do gráfico acima do grupo esquerda
+        # Colocar o título do gráfico acima do grupo direita
         titulo_grafico.next_to(grafico, UP, buff=0.2)
         
         # Posicionar o gráfico à direita
