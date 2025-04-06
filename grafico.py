@@ -132,96 +132,150 @@ class grafico(Scene):
             )
             self.wait(0.5)
 
-        # SETAS VERMELHAS 
-        arrow_points = [
-            ([390, 2900], [550, 2900]), # seta para a direita
-            ([390, 2750], [550, 2750]), # seta para a direita
-            ([390, 2600], [550, 2600]), # seta para a direita
-            ([390, 2450], [550, 2450]), # seta para a direita
-            ([600, 2400], [500, 2200]), 
-               # Seta 1
-            ([650, 2300], [550, 2100]),
-            # Seta 2 (+60 em X, -100 em Y)
-            ([710, 2200], [610, 2000]),
-            # Seta 3
-            ([770, 2100], [670, 1900]),
-            # Seta 4
-            ([830, 2000], [730, 1800]),
-            # Seta 5
-            ([890, 1900], [790, 1700]),
-            # Seta 6
-            ([950, 1800], [850, 1600]),
-            # Seta 7
-            ([1010, 1700], [910, 1500]),
-            # Diagonal amarela
-            ([1050, 1600.0], [960, 1380.0]),
-            ([1140, 1555.0], [1050, 1335.0]),
-            ([1230, 1510.0], [1140, 1290.0]),
-            ([1320, 1465.0], [1230, 1245.0]),
-            ([1410, 1420.0], [1320, 1200.0]),
-            ([1500, 1375.0], [1410, 1155.0]),
-            ([1590, 1330.0], [1500, 1110.0]),
-            ([1680, 1285.0], [1590, 1065.0]),
-            ([1770, 1240.0], [1680, 1020.0]),
-            ([1860, 1195.0], [1770, 975.0]),
-            ([1950, 1150.0], [1860, 930.0]),
-            ([2040, 1105.0], [1950, 885.0]),
-            ([2130, 1060.0], [2040, 840.0]),
-            ([2220, 1015.0], [2130, 795.0]),
-            ([2310, 970.0], [2220, 750.0]),
-            ([2400, 925.0], [2310, 705.0]),
-            ([2490, 880.0], [2400, 660.0]),
-            ([2580, 835.0], [2490, 615.0]),
-            ([2670, 790.0], [2580, 570.0]),
-            # direita
-            ([2800, 550], [2800, 800]),
-
-            ([2900, 550], [2900, 800]),
-
-            ([3000, 550], [3000, 800]),
-
-            ([3100, 550], [3100, 800]),
-
-            ([3200, 550], [3200, 800]),
-
-            ([3300, 550], [3300, 800]),
-
-            ([3400, 550], [3400, 800]),
-
-            ([3500, 550], [3500, 800]),
-
-            ([3600, 550], [3600, 800]),
-
-            ([3700, 550], [3700, 800])
+        # Definição dos grupos de setas por área
+        arrow_groups = {
+            "horizontal_top": [
+                ([390, 2900], [550, 2900]),
+                ([390, 2750], [550, 2750]),
+                ([390, 2600], [550, 2600]),
+                ([390, 2450], [550, 2450])
+            ],
+            "diagonal": [
+                ([600, 2400], [500, 2200]),
+                ([650, 2300], [550, 2100]),
+                ([710, 2200], [610, 2000]),
+                ([770, 2100], [670, 1900]),
+                ([830, 2000], [730, 1800]),
+                ([890, 1900], [790, 1700]),
+                ([950, 1800], [850, 1600]),
+                ([1010, 1700], [910, 1500])
+            ],
+            "diagonal_long": [
+                ([1050, 1600.0], [960, 1380.0]),
+                ([1140, 1555.0], [1050, 1335.0]),
+                ([1230, 1510.0], [1140, 1290.0]),
+                ([1320, 1465.0], [1230, 1245.0]),
+                ([1410, 1420.0], [1320, 1200.0]),
+                ([1500, 1375.0], [1410, 1155.0]),
+                ([1590, 1330.0], [1500, 1110.0]),
+                ([1680, 1285.0], [1590, 1065.0]),
+                ([1770, 1240.0], [1680, 1020.0]),
+                ([1860, 1195.0], [1770, 975.0]),
+                ([1950, 1150.0], [1860, 930.0]),
+                ([2040, 1105.0], [1950, 885.0]),
+                ([2130, 1060.0], [2040, 840.0]),
+                ([2220, 1015.0], [2130, 795.0]),
+                ([2310, 970.0], [2220, 750.0]),
+                ([2400, 925.0], [2310, 705.0]),
+                ([2490, 880.0], [2400, 660.0]),
+                ([2580, 835.0], [2490, 615.0]),
+                ([2670, 790.0], [2580, 570.0])
+            ],
+            "vertical_right": [
+                ([2800, 550], [2800, 800]),
+                ([2900, 550], [2900, 800]),
+                ([3000, 550], [3000, 800]),
+                ([3100, 550], [3100, 800]),
+                ([3200, 550], [3200, 800]),
+                ([3300, 550], [3300, 800]),
+                ([3400, 550], [3400, 800]),
+                ([3500, 550], [3500, 800]),
+                ([3600, 550], [3600, 800]),
+                ([3700, 550], [3700, 800])
             ]
-        # Criar grupo de setas
-        arrows = VGroup()
+        }
         
-        # Criar cada seta com posições precisas
-        for start, end in arrow_points:
-            arrow = Arrow(
+        # Função para criar setas com estilo aprimorado
+        def create_arrow(start, end):
+            return Arrow(
                 axes.coords_to_point(start[0], start[1]),
                 axes.coords_to_point(end[0], end[1]),
                 color="#4E4AE8",
                 buff=0,
-                stroke_width=8,
-                tip_length=0.3,
-                max_stroke_width_to_length_ratio=8,
-                max_tip_length_to_length_ratio=0.4
+                stroke_width=6,  # Ligeiramente mais fino para um estilo mais elegante
+                tip_length=0.25,  # Ponta ligeiramente menor
+                max_stroke_width_to_length_ratio=6,
+                max_tip_length_to_length_ratio=0.35
             )
-            arrows.add(arrow)
         
-        # Animação das setas
-        for arrow in arrows:
-            self.play(Create(arrow), run_time=0.5)
-        self.wait(2)
+        # Criar grupos de setas
+        arrow_mobjects = {}
+        for group_name, arrow_coords in arrow_groups.items():
+            arrow_mobjects[group_name] = VGroup(*[
+                create_arrow(start, end) for start, end in arrow_coords
+            ])
+            
+        # Animação com estilo 3Blue1Brown: aparecimento gradual por grupos
+        # Cada grupo tem uma leve cascata interna
+        
+        # 1. Horizontal superior (da esquerda para a direita)
+        self.play(
+            LaggedStart(*[
+                FadeIn(arrow, scale=0.95) 
+                for arrow in arrow_mobjects["horizontal_top"]
+            ], lag_ratio=0.15),
+            run_time=1.2
+        )
+        
+        # 2. Diagonal superior (aparecimento em cascata)
+        self.play(
+            LaggedStart(*[
+                FadeIn(arrow, scale=0.95) 
+                for arrow in arrow_mobjects["diagonal"]
+            ], lag_ratio=0.08),
+            run_time=1.3
+        )
+        
+        # 3. Diagonal longa (aparecimento em cascata)
+        self.play(
+            LaggedStart(*[
+                FadeIn(arrow, scale=0.95) 
+                for arrow in arrow_mobjects["diagonal_long"]
+            ], lag_ratio=0.04),
+            run_time=1.5
+        )
+        
+        # 4. Vertical direita (de baixo para cima)
+        self.play(
+            LaggedStart(*[
+                FadeIn(arrow, scale=0.95) 
+                for arrow in arrow_mobjects["vertical_right"]
+            ], lag_ratio=0.08),
+            run_time=1.2
+        )
+        
+        # Reagrupar todas as setas para manipulação posterior
+        all_arrows = VGroup(
+            *arrow_mobjects["horizontal_top"],
+            *arrow_mobjects["diagonal"],
+            *arrow_mobjects["diagonal_long"],
+            *arrow_mobjects["vertical_right"]
+        )
+        
+        # Efeito sutil de destaque (estilo 3Blue1Brown)
+        self.play(
+            AnimationGroup(
+                all_arrows.animate.set_color("#6E6EFF"),  # Azul ligeiramente mais claro
+                all_arrows.animate.set_stroke_width(7),   # Ligeiramente mais grosso
+            ),
+            run_time=1,
+            rate_func=there_and_back_with_pause
+        )
+        
+        self.wait(1)
 
         # Explicação das setas
         explicacao = Tex(r"As setas sinalizam o sentido das desigualdades\\em cada restrição, apontando a região de solução", 
                         font_size=30).next_to(legend, LEFT, buff=0.5).shift(UP*1)
         self.play(Write(explicacao, run_time=2))
         self.wait(4)
-        self.play(FadeOut(explicacao), FadeOut(arrows))
+        
+        # Fade out mais elegante
+        self.play(
+            FadeOut(explicacao, shift=UP*0.2),
+            FadeOut(all_arrows, lag_ratio=0.04, scale=0.9),
+            run_time=1.5
+        )
 
         # # Interseções relevantes
         # intersections = [
