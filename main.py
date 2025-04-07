@@ -548,17 +548,16 @@ class ProductionMix(Scene):
             r"Para resolver este problema, utilizaremos o Método Gráfico que consiste em \\"
             r"encontrar a solução ótima do problema através da análise gráfica das restrições do modelo. Vamos começar analisando as restrições de capacidade produtiva:\\",
             font_size=25
-        ).next_to(restricoes, DOWN, aligned_edge=LEFT, buff=0.5)
+        ).next_to(restricoes, DOWN, aligned_edge=LEFT, buff=0.3)
 
         self.play(Write(metodo_grafico, run_time=5))
         self.play(FadeOut(metodo_grafico))
 
         resolucao = Tex(
             r"\raggedright \linespread{1.5}\selectfont "
-            r"Consideraremos as inequações como equações e as representaremos graficamente por meio de retas nos eixos $x_1$ e $x_2$ \\",
+            r"Consideraremos as inequações como equações e as representaremos graficamente por meio de retas nos eixos $x_1$ e $x_2$. . Vamos agora encontrar interseções em $x_1$ e $x_2$",
             font_size=25
-        ).next_to(restricoes, DOWN, aligned_edge=LEFT, buff=0.5)
-
+        ).next_to(restricoes, DOWN, aligned_edge=LEFT, buff=0.3)
 
         restricoes2 = MathTex(
             r"""
@@ -568,7 +567,7 @@ class ProductionMix(Scene):
             0.05x_1 + 0.09x_2 &= 170
             """,
             font_size=25
-        ).next_to(resolucao, DOWN, aligned_edge=LEFT, buff=0.4)
+        ).next_to(resolucao, DOWN, aligned_edge=LEFT, buff=0.3)
 
         self.play(Write(resolucao, run_time=5))
         self.play(Write(restricoes2, run_time=5))
