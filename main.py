@@ -2489,6 +2489,10 @@ class MixProducaoCompleto(Scene):
         # Definição dos grupos de setas por área
         arrow_groups = {
             "horizontal_top": [
+                ([390, 3500], [550, 3500]),
+                ([390, 3350], [550, 3350]),
+                ([390, 3200], [550, 3200]),
+                ([390, 3050], [550, 3050]),
                 ([390, 2900], [550, 2900]),
                 ([390, 2750], [550, 2750]),
                 ([390, 2600], [550, 2600]),
@@ -2526,6 +2530,7 @@ class MixProducaoCompleto(Scene):
                 ([2670, 790.0], [2580, 570.0])
             ],
             "vertical_right": [
+                ([2710, 550], [2710, 800]),
                 ([2800, 550], [2800, 800]),
                 ([2900, 550], [2900, 800]),
                 ([3000, 550], [3000, 800]),
@@ -2535,7 +2540,9 @@ class MixProducaoCompleto(Scene):
                 ([3400, 550], [3400, 800]),
                 ([3500, 550], [3500, 800]),
                 ([3600, 550], [3600, 800]),
-                ([3700, 550], [3700, 800])
+                ([3700, 550], [3700, 800]),
+                ([3800, 550], [3800, 800]),
+                ([3900, 550], [3900, 800]),
             ]
         }
         
@@ -2559,9 +2566,6 @@ class MixProducaoCompleto(Scene):
                 create_arrow(start, end) for start, end in arrow_coords
             ])
             
-        # Animação com estilo 3Blue1Brown: aparecimento gradual por grupos
-        # Cada grupo tem uma leve cascata interna
-        
         # 1. Horizontal superior (da esquerda para a direita)
         self.play(
             LaggedStart(*[
@@ -2619,8 +2623,8 @@ class MixProducaoCompleto(Scene):
         self.wait(1)
 
         # Explicação das setas
-        explicacao = Tex(r"As setas sinalizam o sentido das desigualdades\\em cada restrição, apontando a região de solução", 
-                        font_size=30).next_to(legend, LEFT, buff=0.5).shift(UP*1)
+        explicacao = Tex(r"As setas sinalizam o sentido das \\ desigualdades em cada restrição, \\ apontando a região de solução", 
+                        font_size=30).next_to(legend, LEFT, buff=1.5).shift(UP*1)
         self.play(Write(explicacao, run_time=2))
         self.wait(4)
         
@@ -3175,7 +3179,7 @@ class MixProducaoCompleto(Scene):
         # Destaque para o valor máximo
         destaque_max = Circumscribe(
             tabela[max_z_index + 1], 
-            color="#77CF7B",  # Alterado para verde
+            color="#77CF7B",  
             time_width=2, 
             run_time=2, 
             stroke_width=5
@@ -3185,7 +3189,7 @@ class MixProducaoCompleto(Scene):
         # Destaque para o ponto ótimo no gráfico
         destaque_ponto = Circumscribe(
             ponto_destacado, 
-            color="#77CF7B",  # Alterado para verde
+            color="#77CF7B",  
             time_width=2, 
             run_time=2, 
             stroke_width=5
