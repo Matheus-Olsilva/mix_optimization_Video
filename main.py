@@ -24,20 +24,20 @@ class MixProducaoCompleto(Scene):
         
         # ========== SEGUNDA PARTE: GraficoOtimizacao ==========
         # Configurar o título e definição
-        titulo_calculos = Text("Cálculo dos Vértices da Região Viável", font="IBM Plex Sans", font_size=35).set_color(WHITE)
+        titulo_calculos = Text("Cálculo dos Vértices da Região Viável", font="IBM Plex Sans", font_size=35).set_color("#FFFFFF")
         titulo_calculos.to_edge(UP, buff=0.5).shift(LEFT*1.0)
         self.play(Write(titulo_calculos), run_time=1.5)
         
         # Definição do Teorema Fundamental da Programação Linear
         definicao = Text("O Teorema Fundamental da Programação Linear afirma que, se existir uma", 
-                         font="IBM Plex Sans", font_size=24).set_color(WHITE)
+                         font="IBM Plex Sans", font_size=24).set_color("#FFFFFF")
         definicao2 = Text("solução ótima para um problema de programação linear, ela estará em",
-                         font="IBM Plex Sans", font_size=24).set_color(WHITE)
+                         font="IBM Plex Sans", font_size=24).set_color("#FFFFFF")
         
         cor_vertices = "#605CEA"
-        um_dos = Text("um dos ", font="IBM Plex Sans", font_size=24).set_color(WHITE)
+        um_dos = Text("um dos ", font="IBM Plex Sans", font_size=24).set_color("#FFFFFF")
         vertices_text = Text("vértices", font="IBM Plex Sans", font_size=24).set_color(cor_vertices)
-        da_regiao = Text(" da região viável.", font="IBM Plex Sans", font_size=24).set_color(WHITE)
+        da_regiao = Text(" da região viável.", font="IBM Plex Sans", font_size=24).set_color("#FFFFFF")
         
         linha_modificada = VGroup(um_dos, vertices_text, da_regiao).arrange(RIGHT, buff=0.2)
         
@@ -62,8 +62,6 @@ class MixProducaoCompleto(Scene):
         self.clear()
         self.mostrar_tabela_funcao_objetivo()
         
-        self.wait(3)
-        
     # ============ INCLUINDO MÉTODOS DE ProductionMix ============
     def entrada(self):
         logo_path = r"C:\Users\Mathe\Desktop\Free_Lance\Harumi\Videos\mix_producao\mix_optimization_Video\harumi_logo.png"
@@ -73,13 +71,13 @@ class MixProducaoCompleto(Scene):
         self.rect = Rectangle(
             width=self.logo.height * (102/157),
             height=self.logo.height,
-            color=WHITE,
+            color="#FFFFFF",
             stroke_width=10
         ).move_to(self.logo)
 
         # Cria letras individualmente para o texto "HARUMI"
         letters = VGroup(*[
-            Text(letter, font="IBM Plex Mono", font_size=80, color=WHITE)
+            Text(letter, font="IBM Plex Mono", font_size=80, color="#FFFFFF", stroke_width=0.5)
             for letter in "HARUMI"
         ])
         # Arranja as letras com espaçamento customizado
@@ -159,13 +157,13 @@ class MixProducaoCompleto(Scene):
         cheese = SVGMobject(
             r"C:\Users\Mathe\Desktop\Free_Lance\Harumi\Videos\mix_producao\mix_optimization_Video\cheese.svg"
         ).scale(0.4)
-        cheese_text = Tex("Queijo", font_size=30)
+        cheese_text = Tex("Queijo", font_size=30, color="#FFFFFF")
         cheese_group = VGroup(cheese, cheese_text).arrange(DOWN, buff=0.2)
 
         iorgute = SVGMobject(
             r"C:\Users\Mathe\Desktop\Free_Lance\Harumi\Videos\mix_producao\mix_optimization_Video\iorgute.svg"
         ).scale(0.4)
-        iorgute_text = Tex("Iorgute", font_size=30)
+        iorgute_text = Tex("Iorgute", font_size=30, color="#FFFFFF")
         iorgute_group = VGroup(iorgute, iorgute_text).arrange(DOWN, buff=0.2)
 
         products = VGroup(cheese_group, iorgute_group).arrange(RIGHT, buff=0.5)
@@ -189,19 +187,19 @@ class MixProducaoCompleto(Scene):
     def apresentacao_problema2(self):
         texto_intro = Tex(
             r"\raggedright \fontfamily{IBM Plex Sans}\selectfont Devido a razões contratuais, a empresa necessita produzir\\uma quantidade mínima diária:",
-            font_size=40, color="#FFFFFF"
+            font_size=40, color="#FFFFFF", stroke_width=0.3
         ).to_edge(LEFT)
 
         lista_quantidades = BulletedList(
             r"\raggedright \fontfamily{IBM Plex Sans}\selectfont 320kg de iogurte;",
             r"\raggedright \fontfamily{IBM Plex Sans}\selectfont 380kg de queijo.",
             font_size=40,
-            buff=0.5, color="#FFFFFF"
+            buff=0.5, color="#FFFFFF", stroke_width=0.3
         ).to_edge(LEFT)
 
         texto_final = Tex(
             r"\raggedright \fontfamily{IBM Plex Sans}\selectfont A área comercial da empresa garante que existe mercado \\ para absorver qualquer nível de produção",
-            font_size=40, color="#FFFFFF"
+            font_size=40, color="#FFFFFF", stroke_width=0.3
         ).to_edge(LEFT)
 
         grupo = VGroup(texto_intro, lista_quantidades, texto_final)
@@ -221,26 +219,23 @@ class MixProducaoCompleto(Scene):
             # Texto introdutório
             texto_intro = Tex(
                 r"Você também possui informações sobre:",
-                font_size=40
+                font_size=40, color="#FFFFFF", stroke_width=0.3
             ).to_edge(LEFT).shift(DOWN*5.0)
 
             # Lista com quantidades mínimas (alinhada à esquerda)
             lista_quantidade1 = BulletedList(
                 r"\raggedright \fontfamily{IBM Plex Sans}\selectfont Matérias-primas usadas para fabricar cada produto;",
-
-                font_size=40,
+                font_size=40, color="#FFFFFF", stroke_width=0.3
             ).to_edge(LEFT).shift(DOWN*0.5)
 
             lista_quantidade2 = BulletedList(
                 r"\raggedright \fontfamily{IBM Plex Sans}\selectfont Disponibilidade de matérias-primas e demandas;",
-
-                font_size=40,
+                font_size=40, color="#FFFFFF", stroke_width=0.3
             ).next_to(lista_quantidade1,DOWN).to_edge(LEFT).shift(DOWN*0.5)
 
             lista_quantidade3 = BulletedList(
                 r"\raggedright \fontfamily{IBM Plex Sans}\selectfont Margem de contribuição de cada produto.",
-
-                font_size=40,
+                font_size=40, color="#FFFFFF", stroke_width=0.3
             ).next_to(lista_quantidade2, DOWN).to_edge(LEFT).shift(DOWN*0.5)
 
             lista_quantidades = VGroup(lista_quantidade1, lista_quantidade2, lista_quantidade3)
@@ -263,8 +258,9 @@ class MixProducaoCompleto(Scene):
         titulo = Text(
             "Tabela 1: Margem de Contribuição Unitária (R$/kg)",
             font="IBM Plex Sans", 
-            color=WHITE,
-            font_size=25  
+            color="#FFFFFF",
+            font_size=25,
+            stroke_width=0.5
         ).to_edge(UP, buff=0.3)
         
         tabela = Table(
@@ -273,29 +269,30 @@ class MixProducaoCompleto(Scene):
                 ["6,30", "5,15", "1,15"],
             ],
             row_labels=[
-                Text("Iogurte", font_size=20, color=WHITE, font="IBM Plex Sans"),
-                Text("Queijo Mussarela", font_size=20, color=WHITE, font="IBM Plex Sans")
+                Text("Iogurte", font_size=20, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
+                Text("Queijo Mussarela", font_size=20, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5)
             ],
             col_labels=[
-                Text("Preço (R$/kg)", font_size=20, color=WHITE, font="IBM Plex Sans"),
-                Text("Custos Variáveis (R$/kg)", font_size=20, color=WHITE, font="IBM Plex Sans"),
-                Text("Margem (R$/kg)", font_size=20, color=WHITE, font="IBM Plex Sans")
+                Text("Preço (R$/kg)", font_size=20, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
+                Text("Custos Variáveis (R$/kg)", font_size=20, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
+                Text("Margem (R$/kg)", font_size=20, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5)
             ],
-            top_left_entry=Text("Produto", font_size=20, color=WHITE, font="IBM Plex Sans"),
+            top_left_entry=Text("Produto", font_size=20, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
             include_outer_lines=True,
             h_buff=0.5,
             v_buff=0.3,
             element_to_mobject_config={
                 "font_size": 24, 
-                "color": WHITE,
-                "font": "IBM Plex Sans"  
+                "color": "#FFFFFF",
+                "font": "IBM Plex Sans",
+                "stroke_width": 0.2
             }
         ).scale(0.9).next_to(titulo, DOWN, buff=0.3)
         
         texto_intro = Tex(
             r"\raggedright " 
             r"De acordo com os dados da tabela, vamos escrever um modelo matemático simples para resolver o problema",
-            font_size=32
+            font_size=32, color="#FFFFFF", stroke_width=0.3
         ).to_edge(LEFT, buff=0.5)
         
         texto_variaveis = Tex(
@@ -303,20 +300,20 @@ class MixProducaoCompleto(Scene):
             r"Primeiro, definimos as variáveis: \\"
             r"$x_1$ = quantidade de iogurte a ser produzida \\"
             r"$x_2$ = quantidade de queijo a ser produzida",
-            font_size=32
+            font_size=32, color="#FFFFFF", stroke_width=0.3
         ).next_to(texto_intro, DOWN, aligned_edge=LEFT, buff=0.4)
 
         texto_fun_obj = Tex(
             r"\raggedright " 
             r"O nosso objetivo é maximizar o lucro total, que é a soma das margens de contribuição unitárias multiplicadas pelas quantidades de cada item: \\",
-            font_size=32
+            font_size=32, color="#FFFFFF", stroke_width=0.3
         ).next_to(texto_variaveis, DOWN, aligned_edge=LEFT, buff=0.4)
 
         texto_modelo = Tex(
             r"\raggedright " 
             r"Modelo: \\"
             r"$\text{Max } Z = 0,8x_1 + 1,15x_2$",
-            font_size=32
+            font_size=32, color="#FFFFFF", stroke_width=0.3
         ).next_to(texto_fun_obj, DOWN, aligned_edge=LEFT, buff=0.4)
         
         grupo = VGroup(titulo, tabela, texto_intro, texto_variaveis, texto_fun_obj, texto_modelo)
@@ -326,9 +323,9 @@ class MixProducaoCompleto(Scene):
         self.play(Create(tabela))
         self.wait(3)
         self.play(Write(texto_intro, run_time = 3))
-        self.play(Write(texto_variaveis, run_time = 4)) 
-        self.wait(2)
-        self.play(Write(texto_fun_obj, run_time =4))
+        self.play(Write(texto_variaveis, run_time = 2)) 
+        self.wait(1)
+        self.play(Write(texto_fun_obj, run_time =2))
         margem_col = tabela.get_columns()[3]  
         retangulo_destaque = SurroundingRectangle(
             margem_col,
@@ -353,14 +350,14 @@ class MixProducaoCompleto(Scene):
             r"Por exemplo, se produzirmos 400 kg de iogurte e 500 kg de queijo, o lucro total será: \\"
             r"$\text{Max } Z = 0,8x_1 + 1,15x_2$ \\"
             r"$Z = 0,8 \times 400 + 1,15 \times 500 = 320 + 575 = 895.00$",
-            font_size=32
+            font_size=32, color="#FFFFFF", stroke_width=0.3
         ).to_edge(LEFT, buff=0.5).shift(UP*2)
         
         exemplicificacao_restricoes = Tex(
            r"\raggedright \linespread{1.5}\selectfont "
             r"Porém, na prática, existem restrições de produção, como capacidade \\ de produção, demanda, etc.\\",
             r"Encontrar a solução que maximiza o lucro respeitando essas restrições é chamada de solução ótima",
-            font_size=32
+            font_size=32, color="#FFFFFF", stroke_width=0.3
         ).next_to(exemplicificacao, DOWN, aligned_edge=LEFT, buff=0.5)
 
         self.play(Write(exemplicificacao, run_time = 8))
@@ -373,7 +370,7 @@ class MixProducaoCompleto(Scene):
         explicacao_rest_Materias_primas = Tex(
             r"\raggedright \linespread{1.5}\selectfont " 
             r"Vamos, então, elaborar um modelo simplificado para representar as restrições \\ de capacidade produtiva e demandas mínimas, conforme a tabela abaixo:",
-            font_size=32
+            font_size=32, color="#FFFFFF", stroke_width=0.3
         ).to_edge(LEFT, buff=0.5).shift(UP*2.5)
         
         tabela = Table(
@@ -383,65 +380,66 @@ class MixProducaoCompleto(Scene):
                 ["1200", "460", "650", "170", "-"]
             ],
             row_labels=[
-                Text("Iogurte", font_size=24, font="IBM Plex Sans"),
-                Text("Queijo", font_size=24, font="IBM Plex Sans"),
-                Text("Capacidade", font_size=24, font="IBM Plex Sans"),
+                Text("Iogurte", font_size=24, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
+                Text("Queijo", font_size=24, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
+                Text("Capacidade", font_size=24, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
             ],
             col_labels=[
-                Text("Leite (L)", font_size=24, font="IBM Plex Sans"),
-                Text("Soro (L)", font_size=24, font="IBM Plex Sans"),
-                Text("Gordura (kg)", font_size=24, font="IBM Plex Sans"),
-                Text("Mão de obra (h)", font_size=24, font="IBM Plex Sans"),
-                Text("Demandas (Kg)", font_size=24, font="IBM Plex Sans")
+                Text("Leite (L)", font_size=24, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
+                Text("Soro (L)", font_size=24, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
+                Text("Gordura (kg)", font_size=24, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
+                Text("Mão de obra (h)", font_size=24, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
+                Text("Demandas (Kg)", font_size=24, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5)
             ],
-            top_left_entry=Text("Produto", font_size=24, font="IBM Plex Sans"),
+            top_left_entry=Text("Produto", font_size=24, color="#FFFFFF", font="IBM Plex Sans", stroke_width=0.5),
             include_outer_lines=True,
             h_buff=0.5,
             v_buff=0.3,
             element_to_mobject_config={
                 "font_size": 24, 
-                "color": WHITE,
-                "font": "IBM Plex Sans"  
+                "color": "#FFFFFF",
+                "font": "IBM Plex Sans",
+                "stroke_width": 0.2
             }
         ).scale(0.7).next_to(explicacao_rest_Materias_primas, DOWN, buff=0.5)
 
         onde_texto1 = BulletedList(
             r"\raggedright \fontfamily{IBM Plex Sans}\selectfont Leite, soro e gordura são as matérias-primas utilizadas, enquanto a mão de obra representa o tempo, em horas-homem, necessário para a produção de cada produto;",
-            font_size=25,
+            font_size=25, color="#FFFFFF", stroke_width=0.3,
             buff=0.4
         ).next_to(tabela, DOWN, buff=0.4).to_edge(LEFT)
 
         onde_texto2 = BulletedList(
             r"\raggedright \fontfamily{IBM Plex Sans}\selectfont Capacidade é a quantidade máxima de cada matéria-prima (Kg) disponível e mão de obra (h);",
-            font_size=25,
+            font_size=25, color="#FFFFFF", stroke_width=0.3,
             buff=0.4
         ).next_to(tabela, DOWN, buff=0.4).to_edge(LEFT)
 
         complementar_onde_texto2 = Tex(
             r"\raggedright \fontfamily{IBM Plex Sans}\selectfont Vamos agora adicionar a capacidade ao modelo.",
-            font_size=25,
+            font_size=25, color="#FFFFFF", stroke_width=0.3
         ).next_to(onde_texto2, DOWN, buff=0.2).to_edge(LEFT)
 
         onde_texto3 = BulletedList(
             r"\raggedright \fontfamily{IBM Plex Sans}\selectfont Demandas (Kg) são as quantidades mínimas de cada produto que devem ser produzidas.",
-            font_size=25,
+            font_size=25, color="#FFFFFF", stroke_width=0.3,
             buff=0.4
         ).next_to(tabela, DOWN, buff=0.4).to_edge(LEFT)
 
         # Use MathTex em vez de Tex para melhor renderização das equações
         restricoes = VGroup(
-            MathTex(r"Leite(L) : 0,70x_1 + 0,40x_2"),
-            MathTex(r"Soro(L) : 0,16x_1 + 0,32x_2"),
-            MathTex(r"Gordura(kg) : 0,25x_1 + 0,33x_2"),
-            MathTex(r"\text{Mão de Obra (h)} : 0,05x_1 + 0,09x_2")
+            MathTex(r"Leite(L) : 0,70x_1 + 0,40x_2", color="#FFFFFF"),
+            MathTex(r"Soro(L) : 0,16x_1 + 0,32x_2", color="#FFFFFF"),
+            MathTex(r"Gordura(kg) : 0,25x_1 + 0,33x_2", color="#FFFFFF"),
+            MathTex(r"\text{Mão de Obra (h)} : 0,05x_1 + 0,09x_2", color="#FFFFFF")
         ).arrange(DOWN, buff=0.4).scale(0.55).next_to(onde_texto1, DOWN).to_edge(LEFT)
         
         # Aqui está a parte que garante o alinhamento - agrupamos os símbolos ≤ como um MathTex único
         capacidades = VGroup(
-            MathTex(r"&\leq 1200"),
-            MathTex(r"&\leq 460"),
-            MathTex(r"&\leq 650"),
-            MathTex(r"&\leq 170")
+            MathTex(r"&\leq 1200", color="#FFFFFF"),
+            MathTex(r"&\leq 460", color="#FFFFFF"),
+            MathTex(r"&\leq 650", color="#FFFFFF"),
+            MathTex(r"&\leq 170", color="#FFFFFF")
         ).arrange(DOWN, buff=0.4).scale(0.55)
         
         # Posicionamento preciso para alinhar com as expressões anteriores
@@ -452,12 +450,12 @@ class MixProducaoCompleto(Scene):
             r"\raggedright "
             r"$x_1$ = quantidade de iogurte a ser produzida \\"
             r"$x_2$ = quantidade de queijo a ser produzida",
-            font_size=32
+            font_size=32, color="#FFFFFF", stroke_width=0.3
         ).next_to(restricoes, RIGHT, buff=0.2).shift(RIGHT*1.5+UP*0.6)
     
         Demanda_modelo = VGroup(
-            MathTex(r"\text{Demanda de iogurte: } x_1 \geq 320"),
-            MathTex(r"\text{Demanda de queijo: } x_2 \geq 450")
+            MathTex(r"\text{Demanda de iogurte: } x_1 \geq 320", color="#FFFFFF"),
+            MathTex(r"\text{Demanda de queijo: } x_2 \geq 450", color="#FFFFFF")
         ).arrange(DOWN, buff=0.5).scale(0.55).next_to(onde_texto3, DOWN).to_edge(LEFT)
                
         self.play(Write(explicacao_rest_Materias_primas, run_time = 5))
@@ -536,7 +534,7 @@ class MixProducaoCompleto(Scene):
         Resumo_modelo = Tex(
             r"\raggedright \linespread{1.5}\selectfont " 
             r"Recapitulando o que abordamos até o momento, temos o seguinte modelo matemático:",
-            font_size=25
+            font_size=28, color="#FFFFFF", stroke_width=0.3
         ).to_edge(LEFT, buff=0.5).shift(UP*2.5)
     
         variaveis_decisao = Tex(
@@ -544,14 +542,14 @@ class MixProducaoCompleto(Scene):
             r"As variáveis de decisão, que representam a decisão que devemos tomar \\"
             r"$x_1$ = quantidade de iogurte a ser produzida \\"
             r"$x_2$ = quantidade de queijo a ser produzida",
-            font_size=25
+            font_size=28, color="#FFFFFF", stroke_width=0.3
         ).next_to(Resumo_modelo, DOWN, aligned_edge=LEFT, buff=0.4)
 
         funcao_objetivo = Tex(
             r"\raggedright \linespread{1.5}\selectfont "
             r"Função objetivo: \\"
             r"Maximizar $Z = 0,80x_1 + 1,15x_2$",
-            font_size=25
+            font_size=28, color="#FFFFFF", stroke_width=0.3
         ).next_to(variaveis_decisao, DOWN, aligned_edge=LEFT, buff=0.4)
 
         restricoes = Tex(
@@ -561,7 +559,7 @@ class MixProducaoCompleto(Scene):
             r"$0.16x_1 + 0.32x_2 \leq 460$ \\"
             r"$0.25x_1 + 0.33x_2 \leq 650$ \\"
             r"$0.05x_1 + 0.09x_2 \leq 170$",
-            font_size=25
+            font_size=28, color="#FFFFFF", stroke_width=0.3
         ).next_to(funcao_objetivo, DOWN, aligned_edge=LEFT, buff=0.4)
 
         restricoes_demanda = Tex(
@@ -569,7 +567,7 @@ class MixProducaoCompleto(Scene):
             r"Restrições de Demanda: \\"
             r"$x_1 \geq 320$ \\"
             r"$x_2 \geq 450$",
-            font_size=25
+            font_size=28, color="#FFFFFF", stroke_width=0.3
         ).next_to(restricoes, RIGHT, aligned_edge=LEFT, buff=0.4).shift(RIGHT*2.5+UP*0.45)
 
         self.play(Write(Resumo_modelo, run_time=2))
@@ -592,17 +590,18 @@ class MixProducaoCompleto(Scene):
             r"\raggedright \linespread{1.5}\selectfont "
             r"Para resolver este problema, utilizaremos o Método Gráfico que consiste em \\"
             r"encontrar a solução ótima do problema através da análise gráfica das restrições do modelo. Vamos começar analisando as restrições de capacidade produtiva:\\",
-            font_size=25
+            font_size=28, color="#FFFFFF", stroke_width=0.3
         ).next_to(restricoes, DOWN, aligned_edge=LEFT, buff=0.3)
 
         self.play(Write(metodo_grafico, run_time=5))
+        self.wait(2)
         self.play(FadeOut(metodo_grafico))
 
         resolucao = Tex(
             r"\raggedright \linespread{1.5}\selectfont "
             r"Consideraremos as inequações como equações e as representaremos graficamente por meio de retas nos eixos $x_1$ e $x_2$. Vamos agora encontrar interseções em $x_1$ e $x_2$",
-            font_size=25
-        ).next_to(restricoes, DOWN, aligned_edge=LEFT, buff=0.3)
+            font_size=24, color="#FFFFFF", stroke_width=0.3
+        ).next_to(restricoes, DOWN, aligned_edge=LEFT, buff=0.2)
 
 
         restricoes2 = MathTex(
@@ -612,11 +611,13 @@ class MixProducaoCompleto(Scene):
             0.25x_1 + 0.33x_2 &= 650 \\
             0.05x_1 + 0.09x_2 &= 170
             """,
-            font_size=25
-        ).next_to(resolucao, DOWN, aligned_edge=LEFT, buff=0.3)
+            font_size=25, color="#FFFFFF"
+        ).next_to(resolucao, DOWN, aligned_edge=LEFT, buff=0.2)
 
         self.play(Write(resolucao, run_time=5))
+        self.wait(2)
         self.play(Write(restricoes2, run_time=5))
+        self.wait(2)
 
         self.play(FadeOut(restricoes2))
 
@@ -627,15 +628,15 @@ class MixProducaoCompleto(Scene):
             r"0.16x_1 + 0.32x_2 &= 460\\",
             r"\quad \text{Para } x_1 = 0 &\rightarrow 0.32x_2 = 460 \rightarrow x_2 = 1437.5\\",
             r"\quad \text{Para } x_2 = 0 &\rightarrow 0.16x_1 = 460 \rightarrow x_1 = 2875\\",
-            font_size=25
-        ).next_to(resolucao, DOWN, aligned_edge=LEFT, buff=0.3)
+            font_size=25, color="#FFFFFF"
+        ).next_to(resolucao, DOWN, aligned_edge=LEFT, buff=0.2)
 
         restricoes4 = MathTex(r"0.25x_1 + 0.33x_2 &= 650\\",
             r"\quad \text{Para } x_1 = 0 &\rightarrow 0.33x_2 = 650 \rightarrow x_2 = 1969.7\\",
             r"\quad \text{Para } x_2 = 0 &\rightarrow 0.25x_1 = 650 \rightarrow x_1 = 2600\\",
             r"0.05x_1 + 0.09x_2 &= 170\\",
             r"\quad \text{Para } x_1 = 0 &\rightarrow 0.09x_2 = 170 \rightarrow x_2 = 1888.9\\",
-            r"\quad \text{Para } x_2 = 0 &\rightarrow 0.05x_1 = 170 \rightarrow x_1 = 3400", font_size=25
+            r"\quad \text{Para } x_2 = 0 &\rightarrow 0.05x_1 = 170 \rightarrow x_1 = 3400", font_size=25, color="#FFFFFF"
         ).next_to(restricoes3, RIGHT, aligned_edge=LEFT, buff=0.3).shift(RIGHT*3.0)
 
         
@@ -652,10 +653,10 @@ class MixProducaoCompleto(Scene):
         )
 
         dados = [
-            [Text("R1"), MathTex("0.70x_1 + 0.40x_2 = 1200"), Tex("1714.29"), Tex("3000")],
-            [Text("R2"), MathTex("0.16x_1 + 0.32x_2 = 460"), Tex("2875"), Tex("1437.5")],
-            [Text("R3"), MathTex("0.25x_1 + 0.33x_2 = 650"), Tex("2600"), Tex("1969.7")],
-            [Text("R4"), MathTex("0.05x_1 + 0.09x_2 = 170"), Tex("3400"), Tex("1888.9")]]
+            [Text("R1", color="#FFFFFF", stroke_width=0.5), MathTex("0.70x_1 + 0.40x_2 = 1200", color="#FFFFFF"), Tex("1714.29", color="#FFFFFF", stroke_width=0.3), Tex("3000", color="#FFFFFF", stroke_width=0.3)],
+            [Text("R2", color="#FFFFFF", stroke_width=0.5), MathTex("0.16x_1 + 0.32x_2 = 460", color="#FFFFFF"), Tex("2875", color="#FFFFFF", stroke_width=0.3), Tex("1437.5", color="#FFFFFF", stroke_width=0.3)],
+            [Text("R3", color="#FFFFFF", stroke_width=0.5), MathTex("0.25x_1 + 0.33x_2 = 650", color="#FFFFFF"), Tex("2600", color="#FFFFFF", stroke_width=0.3), Tex("1969.7", color="#FFFFFF", stroke_width=0.3)],
+            [Text("R4", color="#FFFFFF", stroke_width=0.5), MathTex("0.05x_1 + 0.09x_2 = 170", color="#FFFFFF"), Tex("3400", color="#FFFFFF", stroke_width=0.3), Tex("1888.9", color="#FFFFFF", stroke_width=0.3)]]
 
         # Função de conversão 
         def convert_element(element):
@@ -665,10 +666,10 @@ class MixProducaoCompleto(Scene):
         tabela = Table(
             table=dados,
             col_labels=[
-                MathTex("\\text{Retas}"),
-                MathTex("\\text{Restrição}"),
-                MathTex("\\text{Intercepto } x_1"),
-                MathTex("\\text{Intercepto } x_2")
+                MathTex("\\text{Retas}", color="#FFFFFF"),
+                MathTex("\\text{Restrição}", color="#FFFFFF"),
+                MathTex("\\text{Intercepto } x_1", color="#FFFFFF"),
+                MathTex("\\text{Intercepto } x_2", color="#FFFFFF")
             ],
             include_outer_lines=True,
             line_config={"stroke_width": 1},
@@ -685,17 +686,17 @@ class MixProducaoCompleto(Scene):
 
         restricoes_demanda1 = Tex(
             r"\raggedright \linespread{1.5}\selectfont "
-            r"Aplicaremos agora o mesmo procedimento para as restrições de demandas mínimas.", font_size=25
+            r"Aplicaremos agora o mesmo procedimento para as restrições de demandas mínimas.", font_size=25, color="#FFFFFF", stroke_width=0.3
         ).to_edge(LEFT, buff=0.5).shift(UP*3.0)
 
         restricoes_demanda2 = MathTex(
             r"x_1 \geq 320 \\",
-            r"x_2 \geq 450", font_size=25
+            r"x_2 \geq 450", font_size=25, color="#FFFFFF"
         ).next_to(restricoes_demanda1, DOWN, aligned_edge=LEFT, buff=0.4)
 
         restricoes_demanda3 = MathTex(
             r"x_1 &= 320 \\",
-            r"x_2 &= 450", font_size=25
+            r"x_2 &= 450", font_size=25, color="#FFFFFF"
         ).next_to(restricoes_demanda2, RIGHT, aligned_edge=LEFT, buff=1.5).shift(RIGHT*1.0)
 
         seta1 = Arrow(
@@ -720,15 +721,15 @@ class MixProducaoCompleto(Scene):
             r"\raggedright \linespread{1.5}\selectfont "
             r"Como as restrições de demanda são equações mais diretas, não precisamos fazer a divisão dos coeficientes.\\"
             r"Assim, temos que $x_1 = 320$ e $x_2 = 450$.", 
-            font_size=25).next_to(restricoes_demanda2, DOWN, aligned_edge=LEFT, buff=0.5)
+            font_size=25, color="#FFFFFF", stroke_width=0.3).next_to(restricoes_demanda2, DOWN, aligned_edge=LEFT, buff=0.5)
         
         dados_final = [
-            [Text("R1"), MathTex("0.70x_1 + 0.40x_2 = 1200"), Tex("1714.29"), Tex("3000")],
-            [Text("R2"), MathTex("0.16x_1 + 0.32x_2 = 460"), Tex("2875"), Tex("1437.5")],
-            [Text("R3"), MathTex("0.25x_1 + 0.33x_2 = 650"), Tex("2600"), Tex("1969.7")],
-            [Text("R4"), MathTex("0.05x_1 + 0.09x_2 = 170"), Tex("3400"), Tex("1888.9")],
-            [Text("R5"), MathTex("x_1 = 320"), Tex("320"), Tex("0")],
-            [Text("R6"), MathTex("x_2 = 450"), Tex("0"), Tex("450")]
+            [Text("R1", color="#FFFFFF", stroke_width=0.5), MathTex("0.70x_1 + 0.40x_2 = 1200", color="#FFFFFF"), Tex("1714.29", color="#FFFFFF", stroke_width=0.3), Tex("3000", color="#FFFFFF", stroke_width=0.3)],
+            [Text("R2", color="#FFFFFF", stroke_width=0.5), MathTex("0.16x_1 + 0.32x_2 = 460", color="#FFFFFF"), Tex("2875", color="#FFFFFF", stroke_width=0.3), Tex("1437.5", color="#FFFFFF", stroke_width=0.3)],
+            [Text("R3", color="#FFFFFF", stroke_width=0.5), MathTex("0.25x_1 + 0.33x_2 = 650", color="#FFFFFF"), Tex("2600", color="#FFFFFF", stroke_width=0.3), Tex("1969.7", color="#FFFFFF", stroke_width=0.3)],
+            [Text("R4", color="#FFFFFF", stroke_width=0.5), MathTex("0.05x_1 + 0.09x_2 = 170", color="#FFFFFF"), Tex("3400", color="#FFFFFF", stroke_width=0.3), Tex("1888.9", color="#FFFFFF", stroke_width=0.3)],
+            [Text("R5", color="#FFFFFF", stroke_width=0.5), MathTex("x_1 = 320", color="#FFFFFF"), Tex("320", color="#FFFFFF", stroke_width=0.3), Tex("0", color="#FFFFFF", stroke_width=0.3)],
+            [Text("R6", color="#FFFFFF", stroke_width=0.5), MathTex("x_2 = 450", color="#FFFFFF"), Tex("0", color="#FFFFFF", stroke_width=0.3), Tex("450", color="#FFFFFF", stroke_width=0.3)]
         ]
 
         # Função de conversão 
@@ -739,10 +740,10 @@ class MixProducaoCompleto(Scene):
         tabela_final = Table(
             table=dados_final,
             col_labels=[
-                MathTex("\\text{Retas}"),
-                MathTex("\\text{Restrição}"),
-                MathTex("\\text{Intercepto } x_1"),
-                MathTex("\\text{Intercepto } x_2")
+                MathTex("\\text{Retas}", color="#FFFFFF"),
+                MathTex("\\text{Restrição}", color="#FFFFFF"),
+                MathTex("\\text{Intercepto } x_1", color="#FFFFFF"),
+                MathTex("\\text{Intercepto } x_2", color="#FFFFFF")
             ],
             include_outer_lines=True,
             line_config={"stroke_width": 1},
@@ -755,8 +756,8 @@ class MixProducaoCompleto(Scene):
 
         self.play(Write(explicativo, run_time = 5))
         self.wait(1)
-        self.play(Create(tabela_final), run_time=2)
-        self.wait()
+        self.play(Create(tabela_final), run_time=4)
+        self.wait(2)
         self.clear()
 
         # Grafico
@@ -778,7 +779,7 @@ class MixProducaoCompleto(Scene):
                     color=RED
                 ),
                 "R1",
-                MathTex(r"0.70x_1 + 0.40x_2 \leq 1200", font_size=36),
+                MathTex(r"0.70x_1 + 0.40x_2 \leq 1200", font_size=36, color="#FFFFFF"),
                 [(1714.29, 0), (0, 3000)]  # Interceptos específicos
             ),
             # R2 (↓)
@@ -789,7 +790,7 @@ class MixProducaoCompleto(Scene):
                     color=GREEN
                 ),
                 "R2",
-                MathTex(r"0.16x_1 + 0.32x_2 \leq 460", font_size=36),
+                MathTex(r"0.16x_1 + 0.32x_2 \leq 460", font_size=36, color="#FFFFFF"),
                 [(2875, 0), (0, 1437.5)]
             ),
             # R3 (↓)
@@ -800,7 +801,7 @@ class MixProducaoCompleto(Scene):
                     color=BLUE
                 ),
                 "R3",
-                MathTex(r"0.25x_1 + 0.33x_2 \leq 650", font_size=36),
+                MathTex(r"0.25x_1 + 0.33x_2 \leq 650", font_size=36, color="#FFFFFF"),
                 [(2600, 0), (0, 1969.7)]
             ),
             # R4 (↓)
@@ -811,7 +812,7 @@ class MixProducaoCompleto(Scene):
                     color=YELLOW
                 ),
                 "R4",
-                MathTex(r"0.05x_1 + 0.09x_2 \leq 170", font_size=36),
+                MathTex(r"0.05x_1 + 0.09x_2 \leq 170", font_size=36, color="#FFFFFF"),
                 [(3400, 0), (0, 1888.9)]
             ),
             # R5 (→)
@@ -822,7 +823,7 @@ class MixProducaoCompleto(Scene):
                     color=PURPLE
                 ),
                 "R5",
-                MathTex(r"x_1 \geq 320", font_size=36),
+                MathTex(r"x_1 \geq 320", font_size=36, color="#FFFFFF"),
                 [(320, 0)]  # Intercepto único
             ),
             # R6 (↑)
@@ -833,7 +834,7 @@ class MixProducaoCompleto(Scene):
                     color=ORANGE
                 ),
                 "R6",
-                MathTex(r"x_2 \geq 450", font_size=36),
+                MathTex(r"x_2 \geq 450", font_size=36, color="#FFFFFF"),
                 [(0, 450)]  # Intercepto único
             ),
         ]
@@ -845,7 +846,7 @@ class MixProducaoCompleto(Scene):
             color = line.get_color()
             entry = VGroup(
                 Dot(color=color, radius=0.05),
-                MathTex(label, font_size=36).set_color(WHITE),
+                MathTex(label, font_size=36, color="#FFFFFF"),
                 equation.copy()
             ).arrange(RIGHT, buff=0.3)
             legend.add(entry)
@@ -1015,7 +1016,7 @@ class MixProducaoCompleto(Scene):
 
         # Explicação das setas
         explicacao = Tex(r"As setas sinalizam o sentido das \\ desigualdades em cada restrição, \\ apontando a região de solução", 
-                        font_size=30).next_to(legend, LEFT, buff=1.0).shift(UP*1)
+                        font_size=30, color="#FFFFFF", stroke_width=0.3).next_to(legend, LEFT, buff=1.0).shift(UP*1)
         self.play(Write(explicacao, run_time=2))
         self.wait(4)
         
@@ -1040,7 +1041,7 @@ class MixProducaoCompleto(Scene):
         for point, labels in intersections:
             x, y = point
             dot = Dot(axes.coords_to_point(x, y), color=YELLOW, radius=0.1)
-            label = MathTex(f"{{{', '.join(labels)}}}", font_size=30, color=WHITE).next_to(dot, UP, buff=0.2)
+            label = MathTex(f"{{{', '.join(labels)}}}", font_size=30, color="#FFFFFF").next_to(dot, UP, buff=0.2)
             intersection_dots.add(dot)
             intersection_labels.add(label)
 
@@ -1097,7 +1098,7 @@ class MixProducaoCompleto(Scene):
 
         # Explicação final
         explicacao_regiao = Tex(r"A região viável indica o espaço de solução,\\que satisfaz todas as restrições", 
-                                font_size=24).next_to(legend, LEFT, buff=0.5).shift(LEFT*1)
+                                font_size=28, color="#FFFFFF", stroke_width=0.3).next_to(legend, LEFT, buff=0.5).shift(LEFT*1)
         arrow5 = Arrow(explicacao_regiao.get_center() + DOWN*0.5, feasible_region.get_center(), 
                       color="#605CEA", buff=0, max_stroke_width_to_length_ratio=5,
                       max_tip_length_to_length_ratio=0.3)
@@ -1227,14 +1228,14 @@ class MixProducaoCompleto(Scene):
         ponto_destacado = Dot(axes.coords_to_point(x, y), color=YELLOW, radius=0.1)  # Ponto MENOR
         
         # Criando uma label para o ponto
-        label = MathTex(f"({x}, {y})", font_size=24, color=WHITE).next_to(ponto_destacado, UR, buff=0.1)
+        label = MathTex(f"({x}, {y})", font_size=24, color="#FFFFFF").next_to(ponto_destacado, UR, buff=0.1)
         
         # Retornar os componentes separadamente
         return grafico_base, ponto_destacado, label
     
     def calcular_vertice_320_450(self, grupo_definicao):
         # Título mostrando apenas as retas que se cruzam
-        titulo = Text("Interseção de R5 e R6", font="IBM Plex Sans", font_size=25, color="#FFFFFF")
+        titulo = Text("Interseção de R5 e R6", font="IBM Plex Sans", font_size=25, color="#FFFFFF", stroke_width=0.5)
         
         calculos = VGroup(
             MathTex(r"\text{Interseção direta das restrições de demanda:}", font_size=28, color="#FFFFFF"),
@@ -1265,7 +1266,8 @@ class MixProducaoCompleto(Scene):
         
         # Animar cada linha do cálculo individualmente com Write
         for linha in calculos:
-            self.play(Write(linha), run_time=1.5)
+            self.play(Write(linha), run_time=3)
+            self.wait(1)
         
         # Mostrar o ponto do vértice após o cálculo estar completo
         self.play(
@@ -1287,7 +1289,7 @@ class MixProducaoCompleto(Scene):
     
     def calcular_vertice_1457_450(self, grupo_definicao):
         # Título mostrando apenas as retas que se cruzam
-        titulo = Text("Interseção de R1 e R6", font="IBM Plex Sans", font_size=25, color="#FFFFFF")
+        titulo = Text("Interseção de R1 e R6", font="IBM Plex Sans", font_size=25, color="#FFFFFF", stroke_width=0.5)
         
         calculos = VGroup(
             MathTex(r"\text{Interseção de R1 com } x_2 = 450\text{:}", font_size=28, color="#FFFFFF"),
@@ -1320,7 +1322,8 @@ class MixProducaoCompleto(Scene):
         
         # Animar cada linha do cálculo individualmente com Write
         for linha in calculos:
-            self.play(Write(linha), run_time=1.0)
+            self.play(Write(linha), run_time=3)
+            self.wait(1)
         
         # Mostrar o ponto do vértice após o cálculo estar completo
         self.play(
@@ -1340,7 +1343,7 @@ class MixProducaoCompleto(Scene):
     
     def calcular_vertice_1250_812(self, grupo_definicao):
         # Título mostrando apenas as retas que se cruzam
-        titulo = Text("Interseção de R1 e R2", font="IBM Plex Sans", font_size=25, color="#FFFFFF")
+        titulo = Text("Interseção de R1 e R2", font="IBM Plex Sans", font_size=25, color="#FFFFFF", stroke_width=0.5)
         
         calculos = VGroup(
             MathTex(r"\text{Interseção de R1 e R2:}", font_size=28, color="#FFFFFF"),
@@ -1378,7 +1381,8 @@ class MixProducaoCompleto(Scene):
         
         # Animar cada linha do cálculo individualmente com Write
         for linha in calculos:
-            self.play(Write(linha), run_time=0.7)
+            self.play(Write(linha), run_time=4)
+            self.wait(1)
         
         # Mostrar o ponto do vértice após o cálculo estar completo
         self.play(
@@ -1405,7 +1409,7 @@ class MixProducaoCompleto(Scene):
     
     def calcular_vertice_320_1277(self, grupo_definicao):
         # Título mostrando apenas as retas que se cruzam
-        titulo = Text("Interseção de R2 e R5", font="IBM Plex Sans", font_size=25, color="#FFFFFF")
+        titulo = Text("Interseção de R2 e R5", font="IBM Plex Sans", font_size=25, color="#FFFFFF", stroke_width=0.5)
         
         calculos = VGroup(
             MathTex(r"\text{Interseção de R2 com } x_1 = 320\text{:}", font_size=28, color="#FFFFFF"),
@@ -1439,7 +1443,8 @@ class MixProducaoCompleto(Scene):
         
         # Animar cada linha do cálculo individualmente com Write
         for linha in calculos:
-            self.play(Write(linha), run_time=1.0)
+            self.play(Write(linha), run_time=3)
+            self.wait(1)
         
         # Mostrar o ponto do vértice após o cálculo estar completo
         self.play(
@@ -1459,7 +1464,7 @@ class MixProducaoCompleto(Scene):
         
     def mostrar_tabela_funcao_objetivo(self):
         # Título da tabela
-        titulo_tabela = Text("Comparação dos Valores na Função Objetivo", font="IBM Plex Sans", font_size=25, color="#FFFFFF")
+        titulo_tabela = Text("Comparação dos Valores na Função Objetivo", font="IBM Plex Sans", font_size=25, color="#FFFFFF", stroke_width=0.5)
         titulo_tabela.to_edge(UP, buff=0.5)
         
         # Definir a função objetivo - usando MathTex
@@ -1485,17 +1490,17 @@ class MixProducaoCompleto(Scene):
         
         # Cabeçalho
         cabecalho = VGroup(
-            MathTex(r"\text{\textbf{Vértice }} (x_1, x_2)", font_size=34),
-            MathTex(r"\text{\textbf{Valor de }} Z", font_size=34)
+            MathTex(r"\text{\textbf{Vértice }} (x_1, x_2)", font_size=34, color="#FFFFFF"),
+            MathTex(r"\text{\textbf{Valor de }} Z", font_size=34, color="#FFFFFF")
         ).arrange(RIGHT, buff=2.5)
         tabela.add(cabecalho)
         
         # Linhas
         for i, (x, y, z) in enumerate(vertices):
             if i == max_z_index:
-                cor = "#77CF7B"  # Alterado para verde
+                cor = "#77CF7B"  
             else:
-                cor = WHITE
+                cor = "#FFFFFF"
                 
             linha = VGroup(
                 MathTex(f"({x}, {y})", font_size=30, color=cor),
@@ -1513,7 +1518,7 @@ class MixProducaoCompleto(Scene):
         tabela.next_to(funcao_objetivo, DOWN, buff=0.7).to_edge(LEFT, buff=0.7)
         
         # Adicionar uma caixa em torno da tabela
-        box = SurroundingRectangle(tabela, color=WHITE, buff=0.3)
+        box = SurroundingRectangle(tabela, color="#FFFFFF", buff=0.3)
         
         # Criar o gráfico final com tamanho reduzido
         axes = self.criar_eixos()
@@ -1525,16 +1530,16 @@ class MixProducaoCompleto(Scene):
         
         # Criar o ponto destacado
         x_opt, y_opt, z_opt = max_z_value
-        ponto_destacado = Dot(axes.coords_to_point(x_opt, y_opt), color="#77CF7B", radius=0.1)  # Alterado para verde e menor
+        ponto_destacado = Dot(axes.coords_to_point(x_opt, y_opt), color="#77CF7B", radius=0.1)  
         
         # Criando uma label para o ponto
-        label = MathTex(f"({x_opt}, {y_opt})", font_size=18, color=WHITE).next_to(ponto_destacado, UR, buff=0.1)
+        label = MathTex(f"({x_opt}, {y_opt})", font_size=18, color="#FFFFFF").next_to(ponto_destacado, UR, buff=0.1)
         
         # Adicionar tudo ao grupo do gráfico
         grafico_final = VGroup(grafico_base, ponto_destacado, label)
         
         # Criar os textos de solução ótima com MathTex
-        titulo_otimo = MathTex(r"\text{Solução Ótima}", font_size=28, color=WHITE)
+        titulo_otimo = MathTex(r"\text{Solução Ótima}", font_size=28, color="#FFFFFF")
         valor_otimo = MathTex(f"Z = {z_opt:.2f}", font_size=28, color="#77CF7B")  # Alterado para verde
         
         # Posicionamento da solução ótima e do gráfico
